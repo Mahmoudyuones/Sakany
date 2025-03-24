@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/apptheme.dart';
 
-class DeafultTextFormFieled extends StatefulWidget {
+class DefaultTextFormFieled extends StatefulWidget {
   final String hintText;
-  final IconData icon;
+  final IconData? icon;
   final String label;
   final String? Function(String?)? validator;
   final bool isPassword;
   final TextEditingController controller;
-  const DeafultTextFormFieled({
+  const DefaultTextFormFieled({
     super.key,
     required this.hintText,
-    required this.icon,
+    this.icon,
     required this.label,
     this.validator,
     required this.isPassword,
@@ -19,10 +19,10 @@ class DeafultTextFormFieled extends StatefulWidget {
   });
 
   @override
-  State<DeafultTextFormFieled> createState() => _DeafultTextFormFieledState();
+  State<DefaultTextFormFieled> createState() => _DefaultTextFormFieledState();
 }
 
-class _DeafultTextFormFieledState extends State<DeafultTextFormFieled> {
+class _DefaultTextFormFieledState extends State<DefaultTextFormFieled> {
   late bool isObscure = widget.isPassword;
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,10 @@ class _DeafultTextFormFieledState extends State<DeafultTextFormFieled> {
                   ),
                 )
                 : null,
-        prefixIcon: Icon(widget.icon, color: Apptheme.hintTextColor),
+        prefixIcon:
+            widget.icon == null
+                ? null
+                : Icon(widget.icon, color: Apptheme.hintTextColor),
         filled: true,
         fillColor: Apptheme.darkGray,
         hintStyle: TextStyle(color: Apptheme.hintTextColor),

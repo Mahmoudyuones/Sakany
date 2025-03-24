@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/auth/login_screen.dart';
-import 'package:sakany/widgets/deafult_text_form_fieled.dart';
+import 'package:sakany/auth/verfication_screen.dart';
 import 'package:sakany/widgets/default_eleveted_botton.dart';
+import 'package:sakany/widgets/default_text_form_fieled.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,10 +16,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController repasswordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Create Account',
+          style: TextTheme.of(context).titleLarge!.copyWith(fontSize: 16),
+        ),
+      ),
       body: SafeArea(
         child: Center(
           child: SizedBox(
@@ -31,20 +39,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     children: [
                       SizedBox(height: 40),
-                      Text(
-                        'Create Account',
-                        style: TextTheme.of(
-                          context,
-                        ).titleLarge!.copyWith(fontSize: 16),
-                      ),
-                      SizedBox(height: 60),
-                      DeafultTextFormFieled(
+
+                      DefaultTextFormFieled(
                         hintText: 'Enter your username',
                         icon: Icons.person_2,
                         label: "Username",
                         isPassword: false,
                         controller: nameController,
                         validator: (value) {
+                          nameController.text = value ?? '';
                           if (value == null || value.trim().isEmpty) {
                             return 'Please enter your name';
                           }
@@ -52,13 +55,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       SizedBox(height: 20),
-                      DeafultTextFormFieled(
+                      DefaultTextFormFieled(
                         hintText: 'Enter your email or number',
                         icon: Icons.email,
                         label: "Email or Phone number",
                         isPassword: false,
                         controller: emailController,
                         validator: (value) {
+                          emailController.text = value ?? '';
                           if (value == null || value.trim().isEmpty) {
                             return 'Please enter your email or number';
                           }
@@ -66,15 +70,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       SizedBox(height: 20),
-                      DeafultTextFormFieled(
+                      DefaultTextFormFieled(
                         hintText: 'Enter your Password',
                         icon: Icons.lock,
                         label: "Password",
                         isPassword: true,
                         controller: passwordController,
                         validator: (value) {
+                          passwordController.text = value ?? '';
                           if (value == null || value.trim().length < 6) {
                             return 'Password can not be less than 6 charactar';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      DefaultTextFormFieled(
+                        hintText: 'Rewrite your Password',
+                        icon: Icons.lock,
+                        label: "Confirm Password",
+                        isPassword: true,
+                        controller: repasswordController,
+                        validator: (value) {
+                          repasswordController.text = value ?? '';
+                          if (value != passwordController.text) {
+                            return 'Password does not match';
                           }
                           return null;
                         },
@@ -110,6 +130,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void register() {
     FocusScope.of(context).unfocus();
-    if (formKey.currentState!.validate()) {}
+    if (formKey.currentState!.validate()) {
+      Navigator.of(
+        context,
+      ).pushNamed(VerficationScreen.routeName, arguments: emailController.text);
+    }
   }
 }

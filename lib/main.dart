@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sakany/apptheme.dart';
 import 'package:sakany/auth/login_screen.dart';
 import 'package:sakany/auth/register_screen.dart';
+import 'package:sakany/auth/user_profile_form.dart';
+import 'package:sakany/auth/verfication_screen.dart';
+import 'package:sakany/home/home_screen.dart';
 import 'package:sakany/landing_page.dart';
 
 void main() {
@@ -18,8 +21,11 @@ class MyApp extends StatelessWidget {
         LandingPage.routeName: (_) => const LandingPage(),
         RegisterScreen.routeName: (_) => const RegisterScreen(),
         LoginScreen.routeName: (_) => LoginScreen(),
+        VerficationScreen.routeName: (_) => VerficationScreen(),
+        HomeScreen.routeName: (_) => HomeScreen(),
+        UserProfileForm.routeName: (_) => UserProfileForm(),
       },
-      initialRoute: LandingPage.routeName,
+      initialRoute: UserProfileForm.routeName,
       darkTheme: Apptheme.darkTheme,
       theme: Apptheme.lightTheme,
       themeMode: ThemeMode.light,
