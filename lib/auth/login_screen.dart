@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/auth/register_screen.dart';
 import 'package:sakany/home/home_screen.dart';
-import 'package:sakany/shared/app_validator.dart';
 import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
 import 'package:sakany/shared/widgets/default_text_form_fieled.dart';
+
+import '../shared/app_validator.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login_screen';
