@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sakany/apptheme.dart';
+import 'package:sakany/shared/apptheme.dart';
 import 'package:sakany/home/home_screen.dart';
-import 'package:sakany/widgets/default_eleveted_botton.dart';
-import 'package:sakany/widgets/default_text_form_fieled.dart';
+import 'package:sakany/shared/app_validator.dart';
+import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
+import 'package:sakany/shared/widgets/default_text_form_fieled.dart';
 
 class UserProfileForm extends StatefulWidget {
   static const String routeName = '/User_profile_form';
@@ -89,7 +90,9 @@ class _UserProfileFormState extends State<UserProfileForm> {
                   controller: _phoneController,
                   validator: (value) {
                     if (value == null || value.trim() == '') {
-                      return 'Please Enter Your Number Name';
+                      return 'Please Enter Your Phone Number';
+                    } else if (!AppValidator.isPhoneValid(value)) {
+                      return 'Please Enter a valid Phone Number';
                     }
                     return null;
                   },

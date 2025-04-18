@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sakany/apptheme.dart';
+import 'package:sakany/shared/apptheme.dart';
 
 class DefaultTextFormFieled extends StatefulWidget {
   final String hintText;

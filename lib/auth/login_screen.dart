@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/auth/register_screen.dart';
 import 'package:sakany/home/home_screen.dart';
-import 'package:sakany/widgets/default_eleveted_botton.dart';
-import 'package:sakany/widgets/default_text_form_fieled.dart';
+import 'package:sakany/shared/app_validator.dart';
+import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
+import 'package:sakany/shared/widgets/default_text_form_fieled.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login_screen';
@@ -33,14 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               SizedBox(height: 40),
               DefaultTextFormFieled(
-                hintText: 'Enter your email or number',
+                hintText: 'Enter your email',
                 icon: Icons.email,
-                label: 'Email or Phone number',
+                label: 'Email',
                 isPassword: false,
                 controller: nameController,
                 validator: (value) {
-                  if (value == null || value.trim().length < 6) {
-                    return 'Enter a valid email';
+                  if (value == null || value.isEmpty) {
+                    return 'Email can not be empty';
+                  } else if (!AppValidator.isEmailValid(value)) {
+                    return "Invalid Email format";
                   }
                   return null;
                 },
@@ -53,7 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 isPassword: true,
                 controller: passwordController,
                 validator: (value) {
-                  if (value == null || value.trim().length < 6) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Password can not be empty';
+                  } else if (value.trim().length < 6) {
                     return 'PassWord Must be atleast 6 digits';
                   }
                   return null;
