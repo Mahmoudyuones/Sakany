@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/auth/login_screen.dart';
 import 'package:sakany/auth/verfication_screen.dart';
+import 'package:sakany/shared/app_validator.dart';
 import 'package:sakany/widgets/default_eleveted_botton.dart';
 import 'package:sakany/widgets/default_text_form_fieled.dart';
 
@@ -56,15 +57,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       SizedBox(height: 20),
                       DefaultTextFormFieled(
-                        hintText: 'Enter your email or number',
+                        hintText: 'Enter your email',
                         icon: Icons.email,
-                        label: "Email or Phone number",
+                        label: 'Email',
                         isPassword: false,
-                        controller: emailController,
+                        controller: nameController,
                         validator: (value) {
-                          emailController.text = value ?? '';
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Please enter your email or number';
+                          if (value == null || value.isEmpty) {
+                            return 'Email can not be empty';
+                          } else if (!AppValidator.isEmailValid(value)) {
+                            return "Invalid Email format";
                           }
                           return null;
                         },

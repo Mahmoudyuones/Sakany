@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.routeName: (_) => HomeScreen(),
         UserProfileForm.routeName: (_) => UserProfileForm(),
       },
-      initialRoute: UserProfileForm.routeName,
+      initialRoute: LandingPage.routeName,
       darkTheme: Apptheme.darkTheme,
       theme: Apptheme.lightTheme,
       themeMode: ThemeMode.light,
