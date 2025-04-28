@@ -6,19 +6,45 @@ class DefaultElevetedBotton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.text,
+    this.backGroundColor,
+    this.textColor,
+    this.icon,
   });
   final VoidCallback onPressed;
   final String text;
+  final Color? backGroundColor;
+  final Color? textColor;
+  final IconData? icon;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Apptheme.lightblue,
+        backgroundColor: backGroundColor ?? Apptheme.primaryColor,
         fixedSize: Size(MediaQuery.of(context).size.width, 50),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
-      child: Text(text, style: TextTheme.of(context).titleMedium),
+      child:
+          icon == null
+              ? Text(
+                text,
+                style: TextTheme.of(
+                  context,
+                ).titleMedium!.copyWith(color: textColor),
+              )
+              : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(icon, color: Apptheme.textColor, size: 20),
+                  SizedBox(width: 10),
+                  Text(
+                    text,
+                    style: TextTheme.of(
+                      context,
+                    ).titleMedium!.copyWith(color: textColor),
+                  ),
+                ],
+              ),
     );
   }
 }

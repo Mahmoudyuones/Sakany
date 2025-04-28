@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sakany/auth/login_screen.dart';
+import 'package:sakany/auth/view/screens/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';

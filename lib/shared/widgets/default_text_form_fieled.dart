@@ -29,6 +29,7 @@ class _DefaultTextFormFieledState extends State<DefaultTextFormFieled> {
     return TextFormField(
       validator: widget.validator,
       obscureText: isObscure,
+      controller: widget.controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: widget.label,
@@ -53,23 +54,23 @@ class _DefaultTextFormFieledState extends State<DefaultTextFormFieled> {
                 ? null
                 : Icon(widget.icon, color: Apptheme.hintTextColor),
         filled: true,
-        fillColor: Apptheme.darkGray,
+        fillColor: Apptheme.white,
         hintStyle: TextStyle(color: Apptheme.hintTextColor),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Apptheme.primaryColor),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Apptheme.red),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Apptheme.red),
         ),
       ),

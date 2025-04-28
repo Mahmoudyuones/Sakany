@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sakany/shared/apptheme.dart';
-import 'package:sakany/auth/user_profile_form.dart';
+import 'package:sakany/auth/view/screens/user_profile_form_screen.dart';
 import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
 
 class VerficationScreen extends StatefulWidget {
@@ -34,6 +34,8 @@ class _VerficationScreenState extends State<VerficationScreen> {
   @override
   Widget build(BuildContext context) {
     final String email = ModalRoute.of(context)!.settings.arguments as String;
+    print(email);
+    print('xxxxxxxxx');
     const focusedBorderColor = Color.fromRGBO(23, 171, 144, 1);
     const fillColor = Color.fromRGBO(243, 246, 249, 0);
     const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
@@ -53,7 +55,7 @@ class _VerficationScreenState extends State<VerficationScreen> {
       appBar: AppBar(
         title: Text(
           'Verification',
-          style: TextTheme.of(context).titleLarge!.copyWith(fontSize: 16),
+          style: TextTheme.of(context).titleLarge!.copyWith(fontSize: 20),
         ),
       ),
       body: Center(
@@ -98,13 +100,16 @@ class _VerficationScreenState extends State<VerficationScreen> {
                   SizedBox(height: 40),
                   Text(
                     'We have sent the code to',
-                    style: TextTheme.of(context).titleSmall,
+                    style: TextTheme.of(
+                      context,
+                    ).titleSmall!.copyWith(color: Apptheme.textColor),
                   ),
                   Text(
                     email, // Should always be valid
-                    style: TextTheme.of(
-                      context,
-                    ).titleLarge!.copyWith(fontSize: 16),
+                    style: TextTheme.of(context).titleLarge!.copyWith(
+                      fontSize: 16,
+                      color: Apptheme.textColor,
+                    ),
                   ),
                   SizedBox(height: 60),
                   Pinput(
@@ -140,7 +145,7 @@ class _VerficationScreenState extends State<VerficationScreen> {
                         focusNode.unfocus();
                         Navigator.of(
                           context,
-                        ).pushReplacementNamed(UserProfileForm.routeName);
+                        ).pushReplacementNamed(UserProfileFormScreen.routeName);
                       }
                     },
                     text: 'Submit',

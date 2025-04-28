@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sakany/auth/view/widgets/profile_image.dart';
+import 'package:sakany/auth/view/widgets/custom_dropdown_botton.dart';
 import 'package:sakany/shared/app_validator.dart';
 import 'package:sakany/shared/apptheme.dart';
 import 'package:sakany/home/home_screen.dart';
 import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
 import 'package:sakany/shared/widgets/default_text_form_fieled.dart';
 
-class UserProfileForm extends StatefulWidget {
+class UserProfileFormScreen extends StatefulWidget {
   static const String routeName = '/User_profile_form';
-  const UserProfileForm({super.key});
+  const UserProfileFormScreen({super.key});
 
   @override
-  State<UserProfileForm> createState() => _UserProfileFormState();
+  State<UserProfileFormScreen> createState() => _UserProfileFormScreenState();
 }
 
-class _UserProfileFormState extends State<UserProfileForm> {
+class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameController = TextEditingController();
@@ -25,7 +27,6 @@ class _UserProfileFormState extends State<UserProfileForm> {
   final TextEditingController _universityController = TextEditingController();
   final TextEditingController _collegeController = TextEditingController();
   DateFormat dateFormat = DateFormat("dd/MM/yyyy");
-  String? _selectedGender = 'Male';
   DateTime selectedDate = DateTime.now();
 
   @override
@@ -44,6 +45,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                ProfileImage(),
                 Row(
                   children: [
                     Expanded(
@@ -79,7 +81,6 @@ class _UserProfileFormState extends State<UserProfileForm> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 15),
 
                 const SizedBox(height: 15),
                 DefaultTextFormFieled(
@@ -157,56 +158,51 @@ class _UserProfileFormState extends State<UserProfileForm> {
                     return null;
                   },
                 ),
-
+                SizedBox(height: 15),
+                CustomDropdownBotton(
+                  hintText: 'Select Year',
+                  isExpaned: true,
+                  list: [
+                    '1st Year',
+                    '2nd Year',
+                    '3rd Year',
+                    '4th Year',
+                    '5th Year',
+                    '6th Year',
+                    '7th Year',
+                  ],
+                ),
                 const SizedBox(height: 15),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _selectedGender,
-                        dropdownColor: Apptheme.darkGray,
-                        borderRadius: BorderRadius.circular(15),
-                        style: TextTheme.of(
-                          context,
-                        ).titleMedium!.copyWith(color: Apptheme.black),
-                        items: [
-                          DropdownMenuItem<String>(
-                            value: 'Male',
-                            child: Text('Male'),
+                    CustomDropdownBotton(
+                      hintText: 'Select Gender',
+                      list: ['Male', 'Female'],
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        child: Center(
+                          child: Text(
+                            " Birth Date\n${dateFormat.format(selectedDate)}",
+                            style: TextTheme.of(
+                              context,
+                            ).titleMedium!.copyWith(color: Apptheme.black),
                           ),
-                          DropdownMenuItem<String>(
-                            value: 'Female',
-                            child: Text('Female'),
-                          ),
-                        ],
-                        onChanged: (selectedGender) {
-                          if (selectedGender != null) {
-                            _selectedGender = selectedGender;
+                        ),
+                        onTap: () async {
+                          DateTime? dateTime = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime(2005),
+                            firstDate: DateTime(1950),
+                            lastDate: DateTime.now(),
+                          );
+                          if (dateTime != null && dateTime != selectedDate) {
+                            selectedDate = dateTime;
                             setState(() {});
                           }
                         },
                       ),
-                    ),
-                    InkWell(
-                      child: Text(
-                        " Birth Date\n${dateFormat.format(selectedDate)}",
-                        style: TextTheme.of(
-                          context,
-                        ).titleMedium!.copyWith(color: Apptheme.black),
-                      ),
-                      onTap: () async {
-                        DateTime? dateTime = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime(2005),
-                          firstDate: DateTime(1950),
-                          lastDate: DateTime.now(),
-                        );
-                        if (dateTime != null && dateTime != selectedDate) {
-                          selectedDate = dateTime;
-                          setState(() {});
-                        }
-                      },
                     ),
                   ],
                 ),

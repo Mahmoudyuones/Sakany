@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sakany/auth/register_screen.dart';
+import 'package:sakany/auth/view/screens/register_screen.dart';
 import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
 
 class LandingPage extends StatelessWidget {

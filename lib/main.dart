@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/shared/apptheme.dart';
-import 'package:sakany/auth/login_screen.dart';
-import 'package:sakany/auth/register_screen.dart';
-import 'package:sakany/auth/user_profile_form.dart';
-import 'package:sakany/auth/verfication_screen.dart';
+import 'package:sakany/auth/view/screens/login_screen.dart';
+import 'package:sakany/auth/view/screens/register_screen.dart';
+import 'package:sakany/auth/view/screens/user_profile_form_screen.dart';
+import 'package:sakany/auth/view/screens/verfication_screen.dart';
 import 'package:sakany/home/home_screen.dart';
-import 'package:sakany/auth/landing_page.dart';
+import 'package:sakany/auth/view/screens/landing_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (_) => LoginScreen(),
         VerficationScreen.routeName: (_) => VerficationScreen(),
         HomeScreen.routeName: (_) => HomeScreen(),
-        UserProfileForm.routeName: (_) => UserProfileForm(),
+        UserProfileFormScreen.routeName: (_) => UserProfileFormScreen(),
       },
       initialRoute: LandingPage.routeName,
       darkTheme: Apptheme.darkTheme,
