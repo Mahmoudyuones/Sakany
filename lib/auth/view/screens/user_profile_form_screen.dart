@@ -5,7 +5,7 @@ import 'package:sakany/auth/view/widgets/custom_dropdown_button.dart';
 import 'package:sakany/shared/app_validator.dart';
 import 'package:sakany/shared/apptheme.dart';
 import 'package:sakany/home/home_screen.dart';
-import 'package:sakany/shared/widgets/default_eleveted_button.dart';
+import 'package:sakany/shared/widgets/default_elevated_button.dart';
 import 'package:sakany/shared/widgets/default_text_form_field.dart';
 
 class UserProfileFormScreen extends StatefulWidget {

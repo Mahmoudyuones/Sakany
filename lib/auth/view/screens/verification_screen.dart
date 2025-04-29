@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sakany/shared/apptheme.dart';
 import 'package:sakany/auth/view/screens/user_profile_form_screen.dart';
-import 'package:sakany/shared/widgets/default_eleveted_button.dart';
+import 'package:sakany/shared/widgets/default_elevated_button.dart';
 
 class VerificationScreen extends StatefulWidget {
   static const String routeName = '/verification';
