@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sakany/shared/apptheme.dart';
 import 'package:sakany/auth/view/screens/user_profile_form_screen.dart';
-import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
+import 'package:sakany/shared/widgets/default_eleveted_button.dart';
 
-class VerficationScreen extends StatefulWidget {
+class VerificationScreen extends StatefulWidget {
   static const String routeName = '/verification';
-  const VerficationScreen({super.key});
+  const VerificationScreen({super.key});
 
   @override
-  State<VerficationScreen> createState() => _VerficationScreenState();
+  State<VerificationScreen> createState() => _VerificationScreenState();
 }
 
-class _VerficationScreenState extends State<VerficationScreen> {
+class _VerificationScreenState extends State<VerificationScreen> {
   late final TextEditingController pinController;
   late final FocusNode focusNode;
   late final GlobalKey<FormState> formKey;
@@ -34,8 +34,7 @@ class _VerficationScreenState extends State<VerficationScreen> {
   @override
   Widget build(BuildContext context) {
     final String email = ModalRoute.of(context)!.settings.arguments as String;
-    print(email);
-    print('xxxxxxxxx');
+
     const focusedBorderColor = Color.fromRGBO(23, 171, 144, 1);
     const fillColor = Color.fromRGBO(243, 246, 249, 0);
     const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
@@ -71,7 +70,7 @@ class _VerficationScreenState extends State<VerficationScreen> {
                     height: 122,
                     width: 122,
                     decoration: BoxDecoration(
-                      color: Apptheme.darkGray,
+                      color: AppTheme.darkGray,
                       borderRadius: BorderRadius.circular(122),
                     ),
                     child: Center(
@@ -79,12 +78,12 @@ class _VerficationScreenState extends State<VerficationScreen> {
                         height: 92,
                         width: 92,
                         decoration: BoxDecoration(
-                          color: Apptheme.primaryColor,
+                          color: AppTheme.primaryColor,
                           borderRadius: BorderRadius.circular(92),
                         ),
                         child: Icon(
                           Icons.lock,
-                          color: Apptheme.white,
+                          color: AppTheme.white,
                           size: 33,
                         ),
                       ),
@@ -102,13 +101,13 @@ class _VerficationScreenState extends State<VerficationScreen> {
                     'We have sent the code to',
                     style: TextTheme.of(
                       context,
-                    ).titleSmall!.copyWith(color: Apptheme.textColor),
+                    ).titleSmall!.copyWith(color: AppTheme.textColor),
                   ),
                   Text(
                     email, // Should always be valid
                     style: TextTheme.of(context).titleLarge!.copyWith(
                       fontSize: 16,
-                      color: Apptheme.textColor,
+                      color: AppTheme.textColor,
                     ),
                   ),
                   SizedBox(height: 60),
@@ -139,7 +138,7 @@ class _VerficationScreenState extends State<VerficationScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  DefaultElevetedBotton(
+                  DefaultElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         focusNode.unfocus();

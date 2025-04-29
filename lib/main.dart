@@ -3,7 +3,7 @@ import 'package:sakany/shared/apptheme.dart';
 import 'package:sakany/auth/view/screens/login_screen.dart';
 import 'package:sakany/auth/view/screens/register_screen.dart';
 import 'package:sakany/auth/view/screens/user_profile_form_screen.dart';
-import 'package:sakany/auth/view/screens/verfication_screen.dart';
+import 'package:sakany/auth/view/screens/verification_screen.dart';
 import 'package:sakany/home/home_screen.dart';
 import 'package:sakany/auth/view/screens/landing_page.dart';
 
@@ -21,13 +21,13 @@ class MyApp extends StatelessWidget {
         LandingPage.routeName: (_) => const LandingPage(),
         RegisterScreen.routeName: (_) => const RegisterScreen(),
         LoginScreen.routeName: (_) => LoginScreen(),
-        VerficationScreen.routeName: (_) => VerficationScreen(),
+        VerificationScreen.routeName: (_) => VerificationScreen(),
         HomeScreen.routeName: (_) => HomeScreen(),
         UserProfileFormScreen.routeName: (_) => UserProfileFormScreen(),
       },
       initialRoute: LandingPage.routeName,
-      darkTheme: Apptheme.darkTheme,
-      theme: Apptheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
       themeMode: ThemeMode.light,
     );
   }

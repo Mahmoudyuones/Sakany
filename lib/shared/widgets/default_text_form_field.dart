@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/shared/apptheme.dart';
 
-class DefaultTextFormFieled extends StatefulWidget {
+class DefaultTextFormField extends StatefulWidget {
   final String hintText;
   final IconData? icon;
   final String label;
   final String? Function(String?)? validator;
   final bool isPassword;
   final TextEditingController controller;
-  const DefaultTextFormFieled({
+  const DefaultTextFormField({
     super.key,
     required this.hintText,
     this.icon,
@@ -19,10 +19,10 @@ class DefaultTextFormFieled extends StatefulWidget {
   });
 
   @override
-  State<DefaultTextFormFieled> createState() => _DefaultTextFormFieledState();
+  State<DefaultTextFormField> createState() => _DefaultTextFormFieldState();
 }
 
-class _DefaultTextFormFieledState extends State<DefaultTextFormFieled> {
+class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
   late bool isObscure = widget.isPassword;
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _DefaultTextFormFieledState extends State<DefaultTextFormFieled> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: TextStyle(color: Apptheme.textColor),
+        labelStyle: TextStyle(color: AppTheme.textColor),
         hintText: widget.hintText,
         suffixIcon:
             widget.isPassword
@@ -45,17 +45,17 @@ class _DefaultTextFormFieledState extends State<DefaultTextFormFieled> {
                   },
                   icon: Icon(
                     isObscure ? Icons.visibility_off : Icons.visibility,
-                    color: Apptheme.hintTextColor,
+                    color: AppTheme.hintTextColor,
                   ),
                 )
                 : null,
         prefixIcon:
             widget.icon == null
                 ? null
-                : Icon(widget.icon, color: Apptheme.hintTextColor),
+                : Icon(widget.icon, color: AppTheme.hintTextColor),
         filled: true,
-        fillColor: Apptheme.white,
-        hintStyle: TextStyle(color: Apptheme.hintTextColor),
+        fillColor: AppTheme.white,
+        hintStyle: TextStyle(color: AppTheme.hintTextColor),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -63,15 +63,15 @@ class _DefaultTextFormFieledState extends State<DefaultTextFormFieled> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Apptheme.primaryColor),
+          borderSide: BorderSide(color: AppTheme.primaryColor),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Apptheme.red),
+          borderSide: BorderSide(color: AppTheme.red),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Apptheme.red),
+          borderSide: BorderSide(color: AppTheme.red),
         ),
       ),
     );

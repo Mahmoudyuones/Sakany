@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/auth/view/screens/login_screen.dart';
-import 'package:sakany/auth/view/screens/verfication_screen.dart';
+import 'package:sakany/auth/view/screens/verification_screen.dart';
 import 'package:sakany/shared/app_validator.dart';
 import 'package:sakany/shared/apptheme.dart';
-import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
-import 'package:sakany/shared/widgets/default_text_form_fieled.dart';
+import 'package:sakany/shared/widgets/default_eleveted_button.dart';
+import 'package:sakany/shared/widgets/default_text_form_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -18,7 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController repasswordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -39,12 +39,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: Apptheme.primaryColor,
+                          color: AppTheme.primaryColor,
                         ),
                         child: Icon(
                           Icons.home,
                           size: 40,
-                          color: Apptheme.white,
+                          color: AppTheme.white,
                         ),
                       ),
                       SizedBox(height: 10),
@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: 10),
                       Text('Create your account to fine perfect student home'),
                       SizedBox(height: 30),
-                      DefaultTextFormFieled(
+                      DefaultTextFormField(
                         hintText: 'Enter your username',
                         icon: Icons.person_2_outlined,
                         label: "Username",
@@ -69,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       SizedBox(height: 20),
-                      DefaultTextFormFieled(
+                      DefaultTextFormField(
                         hintText: 'Enter your email',
                         icon: Icons.email_outlined,
                         label: 'Email',
@@ -85,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       SizedBox(height: 20),
-                      DefaultTextFormFieled(
+                      DefaultTextFormField(
                         hintText: 'Enter your Password',
                         icon: Icons.lock,
                         label: "Password",
@@ -93,18 +93,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: passwordController,
                         validator: (value) {
                           if (value == null || value.trim().length < 6) {
-                            return 'Password can not be less than 6 charactar';
+                            return 'Password can not be less than 6 character';
                           }
                           return null;
                         },
                       ),
                       SizedBox(height: 20),
-                      DefaultTextFormFieled(
+                      DefaultTextFormField(
                         hintText: 'Rewrite your Password',
                         icon: Icons.lock,
                         label: "Confirm Password",
                         isPassword: true,
-                        controller: repasswordController,
+                        controller: rePasswordController,
                         validator: (value) {
                           if (value != passwordController.text) {
                             return 'Password does not match';
@@ -113,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       SizedBox(height: 40),
-                      DefaultElevetedBotton(
+                      DefaultElevatedButton(
                         onPressed: register,
                         text: "Sign up",
                       ),
@@ -145,19 +145,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
 
-                      DefaultElevetedBotton(
+                      DefaultElevatedButton(
                         onPressed: () {},
                         text: "Sign up with Google",
-                        backGroundColor: Apptheme.white,
-                        textColor: Apptheme.black,
+                        backGroundColor: AppTheme.white,
+                        textColor: AppTheme.black,
                         icon: Icons.g_mobiledata,
                       ),
                       SizedBox(height: 20),
-                      DefaultElevetedBotton(
+                      DefaultElevatedButton(
                         onPressed: () {},
                         text: "Sign up with Facebook",
-                        backGroundColor: Apptheme.white,
-                        textColor: Apptheme.black,
+                        backGroundColor: AppTheme.white,
+                        textColor: AppTheme.black,
                         icon: Icons.facebook,
                       ),
                       TextButton(
@@ -185,16 +185,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void register() {
-    print(nameController.text);
-    print(emailController.text);
-    print(passwordController.text);
-    print(repasswordController.text);
-    print('xxxxxxx');
     FocusScope.of(context).unfocus();
     if (formKey.currentState!.validate()) {
-      Navigator.of(
-        context,
-      ).pushNamed(VerficationScreen.routeName, arguments: emailController.text);
+      Navigator.of(context).pushNamed(
+        VerificationScreen.routeName,
+        arguments: emailController.text,
+      );
     }
   }
 }

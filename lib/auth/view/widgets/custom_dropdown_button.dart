@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/shared/apptheme.dart';
 
-class CustomDropdownBotton extends StatefulWidget {
-  const CustomDropdownBotton({
+class CustomDropdownButton extends StatefulWidget {
+  const CustomDropdownButton({
     super.key,
     required this.list,
-    this.isExpaned = false,
+    this.isExpanded = false,
     required this.hintText,
   });
   final List<String> list;
-  final bool isExpaned;
+  final bool isExpanded;
   final String hintText;
   @override
-  State<CustomDropdownBotton> createState() => _CustomDropdownBottonState();
+  State<CustomDropdownButton> createState() => _CustomDropdownButtonState();
 }
 
-class _CustomDropdownBottonState extends State<CustomDropdownBotton> {
+class _CustomDropdownButtonState extends State<CustomDropdownButton> {
   String? selectedItem;
 
   @override
@@ -31,7 +31,7 @@ class _CustomDropdownBottonState extends State<CustomDropdownBotton> {
         child: DropdownButton<String>(
           borderRadius: BorderRadius.circular(12),
           dropdownColor: Colors.grey.shade200,
-          isExpanded: widget.isExpaned,
+          isExpanded: widget.isExpanded,
           hint: Text(widget.hintText),
           value: selectedItem,
           icon: const Icon(Icons.keyboard_arrow_down),
@@ -42,7 +42,7 @@ class _CustomDropdownBottonState extends State<CustomDropdownBotton> {
                   child: Text(
                     year,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Apptheme.textColor,
+                      color: AppTheme.textColor,
                     ),
                   ),
                 );

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sakany/auth/view/widgets/profile_image.dart';
-import 'package:sakany/auth/view/widgets/custom_dropdown_botton.dart';
+import 'package:sakany/auth/view/widgets/custom_dropdown_button.dart';
 import 'package:sakany/shared/app_validator.dart';
 import 'package:sakany/shared/apptheme.dart';
 import 'package:sakany/home/home_screen.dart';
-import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
-import 'package:sakany/shared/widgets/default_text_form_fieled.dart';
+import 'package:sakany/shared/widgets/default_eleveted_button.dart';
+import 'package:sakany/shared/widgets/default_text_form_field.dart';
 
 class UserProfileFormScreen extends StatefulWidget {
   static const String routeName = '/User_profile_form';
@@ -23,7 +23,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _regionController = TextEditingController();
-  final TextEditingController _adressController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _universityController = TextEditingController();
   final TextEditingController _collegeController = TextEditingController();
   DateFormat dateFormat = DateFormat("dd/MM/yyyy");
@@ -49,7 +49,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: DefaultTextFormFieled(
+                      child: DefaultTextFormField(
                         hintText: 'First Name',
                         label: 'First Name',
                         icon: null,
@@ -65,7 +65,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                     ),
                     const SizedBox(width: 10),
                     Expanded(
-                      child: DefaultTextFormFieled(
+                      child: DefaultTextFormField(
                         hintText: 'Last Name',
                         label: 'last Name',
                         icon: null,
@@ -83,7 +83,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                 ),
 
                 const SizedBox(height: 15),
-                DefaultTextFormFieled(
+                DefaultTextFormField(
                   hintText: 'Phone Number',
                   label: 'Phone Number',
                   icon: null,
@@ -100,7 +100,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                 ),
 
                 const SizedBox(height: 15),
-                DefaultTextFormFieled(
+                DefaultTextFormField(
                   hintText: 'Region',
                   label: 'Region',
                   icon: null,
@@ -115,22 +115,22 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                 ),
 
                 const SizedBox(height: 15),
-                DefaultTextFormFieled(
-                  hintText: 'Adress',
-                  label: 'Adress',
+                DefaultTextFormField(
+                  hintText: 'Address',
+                  label: 'Address',
                   icon: null,
                   isPassword: false,
-                  controller: _adressController,
+                  controller: _addressController,
                   validator: (value) {
                     if (value == null || value.trim() == '') {
-                      return 'Please Enter Your Adress';
+                      return 'Please Enter Your Address';
                     }
                     return null;
                   },
                 ),
 
                 const SizedBox(height: 15),
-                DefaultTextFormFieled(
+                DefaultTextFormField(
                   hintText: 'University',
                   label: 'University',
                   icon: null,
@@ -145,7 +145,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                 ),
 
                 const SizedBox(height: 15),
-                DefaultTextFormFieled(
+                DefaultTextFormField(
                   hintText: 'College',
                   label: 'College',
                   icon: null,
@@ -159,9 +159,9 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                   },
                 ),
                 SizedBox(height: 15),
-                CustomDropdownBotton(
+                CustomDropdownButton(
                   hintText: 'Select Year',
-                  isExpaned: true,
+                  isExpanded: true,
                   list: [
                     '1st Year',
                     '2nd Year',
@@ -176,7 +176,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    CustomDropdownBotton(
+                    CustomDropdownButton(
                       hintText: 'Select Gender',
                       list: ['Male', 'Female'],
                     ),
@@ -187,7 +187,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                             " Birth Date\n${dateFormat.format(selectedDate)}",
                             style: TextTheme.of(
                               context,
-                            ).titleMedium!.copyWith(color: Apptheme.black),
+                            ).titleMedium!.copyWith(color: AppTheme.black),
                           ),
                         ),
                         onTap: () async {
@@ -208,7 +208,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                 ),
 
                 const SizedBox(height: 25),
-                DefaultElevetedBotton(
+                DefaultElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       Navigator.of(

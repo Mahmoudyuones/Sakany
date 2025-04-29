@@ -26,7 +26,7 @@ class _ProfileImageState extends State<ProfileImage> {
               children: [
                 CircleAvatar(
                   radius: 70,
-                  backgroundColor: Apptheme.gray,
+                  backgroundColor: AppTheme.gray,
                   backgroundImage:
                       imageFile != null ? FileImage(imageFile!) : null,
                   child:
@@ -51,7 +51,7 @@ class _ProfileImageState extends State<ProfileImage> {
                                   GestureDetector(
                                     onTap: () async {
                                       var temp =
-                                          await ImagePickerFucntions.gallery();
+                                          await ImagePickerFunctions.gallery();
                                       if (temp != null) {
                                         imageFile = temp;
                                       }
@@ -64,7 +64,7 @@ class _ProfileImageState extends State<ProfileImage> {
                                         Icon(
                                           Icons.image,
                                           size: 30,
-                                          color: Apptheme.primaryColor,
+                                          color: AppTheme.primaryColor,
                                         ),
                                         const SizedBox(height: 8),
                                         const Text('Gallery'),
@@ -75,7 +75,7 @@ class _ProfileImageState extends State<ProfileImage> {
                                   GestureDetector(
                                     onTap: () async {
                                       var temp =
-                                          await ImagePickerFucntions.camera();
+                                          await ImagePickerFunctions.camera();
                                       if (temp != null) {
                                         imageFile = temp;
                                       }
@@ -88,7 +88,7 @@ class _ProfileImageState extends State<ProfileImage> {
                                         Icon(
                                           Icons.camera_alt,
                                           size: 30,
-                                          color: Apptheme.primaryColor,
+                                          color: AppTheme.primaryColor,
                                         ),
                                         const SizedBox(height: 8),
                                         const Text('Camera'),
@@ -106,7 +106,7 @@ class _ProfileImageState extends State<ProfileImage> {
                       child: Icon(
                         Icons.camera_alt_outlined,
                         size: 20,
-                        color: Apptheme.primaryColor,
+                        color: AppTheme.primaryColor,
                       ),
                     ),
                   ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sakany/auth/view/screens/register_screen.dart';
 import 'package:sakany/home/home_screen.dart';
 import 'package:sakany/shared/apptheme.dart';
-import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
-import 'package:sakany/shared/widgets/default_text_form_fieled.dart';
+import 'package:sakany/shared/widgets/default_eleveted_button.dart';
+import 'package:sakany/shared/widgets/default_text_form_field.dart';
 
 import '../../../shared/app_validator.dart';
 
@@ -35,14 +35,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Apptheme.primaryColor,
+                      color: AppTheme.primaryColor,
                     ),
-                    child: Icon(Icons.home, size: 40, color: Apptheme.white),
+                    child: Icon(Icons.home, size: 40, color: AppTheme.white),
                   ),
                   SizedBox(height: 10),
                   Text('Sakany', style: Theme.of(context).textTheme.titleLarge),
                   SizedBox(height: 40),
-                  DefaultTextFormFieled(
+                  DefaultTextFormField(
                     hintText: 'Enter your email',
                     icon: Icons.email,
                     label: 'Email',
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   SizedBox(height: 20),
-                  DefaultTextFormFieled(
+                  DefaultTextFormField(
                     hintText: 'Enter password',
                     icon: Icons.lock,
                     label: 'Password',
@@ -68,13 +68,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (value == null || value.trim().isEmpty) {
                         return 'Password can not be empty';
                       } else if (value.trim().length < 6) {
-                        return 'PassWord Must be atleast 6 digits';
+                        return 'PassWord Must be at least 6 digits';
                       }
                       return null;
                     },
                   ),
                   SizedBox(height: 20),
-                  DefaultElevetedBotton(
+                  DefaultElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         FocusScope.of(context).unfocus();
@@ -118,19 +118,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  DefaultElevetedBotton(
+                  DefaultElevatedButton(
                     onPressed: () {},
                     text: "Login with Google",
-                    backGroundColor: Apptheme.white,
-                    textColor: Apptheme.black,
+                    backGroundColor: AppTheme.white,
+                    textColor: AppTheme.black,
                     icon: Icons.g_mobiledata,
                   ),
                   SizedBox(height: 20),
-                  DefaultElevetedBotton(
+                  DefaultElevatedButton(
                     onPressed: () {},
                     text: "Login with Facebook",
-                    backGroundColor: Apptheme.white,
-                    textColor: Apptheme.black,
+                    backGroundColor: AppTheme.white,
+                    textColor: AppTheme.black,
                     icon: Icons.facebook,
                   ),
                   TextButton(

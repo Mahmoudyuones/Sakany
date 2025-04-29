@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/shared/apptheme.dart';
 
-class DefaultElevetedBotton extends StatelessWidget {
-  const DefaultElevetedBotton({
+class DefaultElevatedButton extends StatelessWidget {
+  const DefaultElevatedButton({
     super.key,
     required this.onPressed,
     required this.text,
@@ -20,7 +20,7 @@ class DefaultElevetedBotton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backGroundColor ?? Apptheme.primaryColor,
+        backgroundColor: backGroundColor ?? AppTheme.primaryColor,
         fixedSize: Size(MediaQuery.of(context).size.width, 50),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
@@ -35,7 +35,7 @@ class DefaultElevetedBotton extends StatelessWidget {
               : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(icon, color: Apptheme.textColor, size: 20),
+                  Icon(icon, color: AppTheme.textColor, size: 20),
                   SizedBox(width: 10),
                   Text(
                     text,

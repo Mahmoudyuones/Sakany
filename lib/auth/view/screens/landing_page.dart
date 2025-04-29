@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sakany/auth/view/screens/register_screen.dart';
-import 'package:sakany/shared/widgets/default_eleveted_botton.dart';
+import 'package:sakany/shared/widgets/default_eleveted_button.dart';
 
 class LandingPage extends StatelessWidget {
   static const String routeName = '/landing_page';
@@ -17,7 +17,7 @@ class LandingPage extends StatelessWidget {
             children: [
               Image.asset('assets/images/Gallery.png'),
               Text('Welcome!', style: Theme.of(context).textTheme.titleLarge),
-              DefaultElevetedBotton(
+              DefaultElevatedButton(
                 onPressed: () {
                   Navigator.of(
                     context,

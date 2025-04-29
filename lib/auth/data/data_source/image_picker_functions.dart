@@ -3,7 +3,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class ImagePickerFucntions {
+class ImagePickerFunctions {
   static Future<File?> camera() async {
     var image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
