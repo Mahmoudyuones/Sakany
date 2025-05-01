@@ -1,0 +1,9 @@
+# Ignore platform-specific code
+windows/** linguist-vendored
+macos/** linguist-vendored
+linux/** linguist-vendored
+ios/** linguist-vendored
+android/** linguist-vendored
+
+# Force Dart detection on main source
+lib/** linguist-language=Dart
