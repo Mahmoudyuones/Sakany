@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sakany/auth/view/screens/register_screen.dart';
-import 'package:sakany/shared/widgets/default_elevated_button.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sakany/features/auth/presentation/screens/register_screen.dart';
+import 'package:sakany/core/widgets/default_elevated_button.dart';
 
 class LandingPage extends StatelessWidget {
   static const String routeName = '/landing_page';
@@ -11,7 +12,7 @@ class LandingPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

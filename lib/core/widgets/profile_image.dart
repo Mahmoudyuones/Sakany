@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sakany/auth/data/data_source/image_picker_functions.dart';
-import 'package:sakany/shared/apptheme.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sakany/core/resources/color_manager.dart';
+import 'package:sakany/features/auth/data/data_source/image_picker_functions.dart';
 
 class ProfileImage extends StatefulWidget {
   const ProfileImage({super.key});
@@ -25,18 +26,18 @@ class _ProfileImageState extends State<ProfileImage> {
               alignment: Alignment.bottomRight,
               children: [
                 CircleAvatar(
-                  radius: 70,
-                  backgroundColor: AppTheme.gray,
+                  radius: 70.r,
+                  backgroundColor: ColorManager.gray,
                   backgroundImage:
                       imageFile != null ? FileImage(imageFile!) : null,
                   child:
                       imageFile == null
-                          ? Icon(Icons.person, size: 80, color: Colors.white)
+                          ? Icon(Icons.person, size: 80.sp, color: Colors.white)
                           : null,
                 ),
                 Positioned(
-                  bottom: 8,
-                  right: 8,
+                  bottom: 8.h,
+                  right: 8.w,
                   child: InkWell(
                     onTap: () {
                       showDialog(
@@ -63,15 +64,15 @@ class _ProfileImageState extends State<ProfileImage> {
                                       children: [
                                         Icon(
                                           Icons.image,
-                                          size: 30,
-                                          color: AppTheme.primaryColor,
+                                          size: 30.sp,
+                                          color: ColorManager.primaryColor,
                                         ),
-                                        const SizedBox(height: 8),
+                                        SizedBox(height: 8.h),
                                         const Text('Gallery'),
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(width: 24),
+                                  SizedBox(width: 24.w),
                                   GestureDetector(
                                     onTap: () async {
                                       var temp =
@@ -87,10 +88,10 @@ class _ProfileImageState extends State<ProfileImage> {
                                       children: [
                                         Icon(
                                           Icons.camera_alt,
-                                          size: 30,
-                                          color: AppTheme.primaryColor,
+                                          size: 30.sp,
+                                          color: ColorManager.primaryColor,
                                         ),
-                                        const SizedBox(height: 8),
+                                        SizedBox(height: 8.h),
                                         const Text('Camera'),
                                       ],
                                     ),
@@ -101,12 +102,12 @@ class _ProfileImageState extends State<ProfileImage> {
                       );
                     },
                     child: CircleAvatar(
-                      radius: 20,
+                      radius: 20.r,
                       backgroundColor: Colors.white,
                       child: Icon(
                         Icons.camera_alt_outlined,
-                        size: 20,
-                        color: AppTheme.primaryColor,
+                        size: 20.sp,
+                        color: ColorManager.primaryColor,
                       ),
                     ),
                   ),
@@ -115,7 +116,7 @@ class _ProfileImageState extends State<ProfileImage> {
             ),
           ],
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           'Upload profile picture',
           style: Theme.of(context).textTheme.titleMedium,

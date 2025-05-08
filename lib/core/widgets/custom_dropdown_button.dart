@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sakany/shared/apptheme.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sakany/core/resources/color_manager.dart';
 
 class CustomDropdownButton extends StatefulWidget {
   const CustomDropdownButton({
@@ -21,15 +22,15 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade400),
         color: Colors.white,
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           dropdownColor: Colors.grey.shade200,
           isExpanded: widget.isExpanded,
           hint: Text(widget.hintText),
@@ -42,7 +43,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                   child: Text(
                     year,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppTheme.textColor,
+                      color: ColorManager.textColor,
                     ),
                   ),
                 );

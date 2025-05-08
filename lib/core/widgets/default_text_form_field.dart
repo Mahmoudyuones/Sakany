@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sakany/shared/apptheme.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sakany/core/resources/color_manager.dart';
 
 class DefaultTextFormField extends StatefulWidget {
   final String hintText;
@@ -33,7 +34,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: TextStyle(color: AppTheme.textColor),
+        labelStyle: TextStyle(color: ColorManager.textColor),
         hintText: widget.hintText,
         suffixIcon:
             widget.isPassword
@@ -45,33 +46,33 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
                   },
                   icon: Icon(
                     isObscure ? Icons.visibility_off : Icons.visibility,
-                    color: AppTheme.hintTextColor,
+                    color: ColorManager.hintTextColor,
                   ),
                 )
                 : null,
         prefixIcon:
             widget.icon == null
                 ? null
-                : Icon(widget.icon, color: AppTheme.hintTextColor),
+                : Icon(widget.icon, color: ColorManager.hintTextColor),
         filled: true,
-        fillColor: AppTheme.white,
-        hintStyle: TextStyle(color: AppTheme.hintTextColor),
+        fillColor: ColorManager.white,
+        hintStyle: TextStyle(color: ColorManager.hintTextColor),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
           borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppTheme.primaryColor),
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(color: ColorManager.primaryColor),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppTheme.red),
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(color: ColorManager.red),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppTheme.red),
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(color: ColorManager.red),
         ),
       ),
     );

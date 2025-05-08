@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:sakany/auth/view/widgets/profile_image.dart';
-import 'package:sakany/auth/view/widgets/custom_dropdown_button.dart';
-import 'package:sakany/shared/app_validator.dart';
-import 'package:sakany/shared/apptheme.dart';
-import 'package:sakany/home/home_screen.dart';
-import 'package:sakany/shared/widgets/default_elevated_button.dart';
-import 'package:sakany/shared/widgets/default_text_form_field.dart';
+import 'package:sakany/core/resources/color_manager.dart';
+import 'package:sakany/core/utils/validator.dart';
+import 'package:sakany/core/widgets/profile_image.dart';
+import 'package:sakany/core/widgets/custom_dropdown_button.dart';
+import 'package:sakany/features/home/home_screen.dart';
+import 'package:sakany/core/widgets/default_elevated_button.dart';
+import 'package:sakany/core/widgets/default_text_form_field.dart';
 
 class UserProfileFormScreen extends StatefulWidget {
   static const String routeName = '/User_profile_form';
@@ -39,13 +40,14 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               children: [
                 ProfileImage(),
+                SizedBox(height: 30.h),
                 Row(
                   children: [
                     Expanded(
@@ -57,13 +59,15 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                         controller: _firstNameController,
                         validator: (value) {
                           if (value == null || value.trim() == '') {
+                            print(MediaQuery.sizeOf(context).height);
+                            print(MediaQuery.sizeOf(context).width);
                             return 'Please Enter Your First Name';
                           }
                           return null;
                         },
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10.w),
                     Expanded(
                       child: DefaultTextFormField(
                         hintText: 'Last Name',
@@ -82,24 +86,17 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 15),
+                SizedBox(height: 15.h),
                 DefaultTextFormField(
                   hintText: 'Phone Number',
                   label: 'Phone Number',
                   icon: null,
                   isPassword: false,
                   controller: _phoneController,
-                  validator: (value) {
-                    if (value == null || value.trim() == '') {
-                      return 'Please Enter Your Phone Number';
-                    } else if (!AppValidator.isPhoneValid(value)) {
-                      return 'Please Enter a valid Phone Number';
-                    }
-                    return null;
-                  },
+                  validator: Validator.validatePhoneNumber,
                 ),
 
-                const SizedBox(height: 15),
+                SizedBox(height: 15.h),
                 DefaultTextFormField(
                   hintText: 'Region',
                   label: 'Region',
@@ -114,7 +111,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                   },
                 ),
 
-                const SizedBox(height: 15),
+                SizedBox(height: 15.h),
                 DefaultTextFormField(
                   hintText: 'Address',
                   label: 'Address',
@@ -129,7 +126,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                   },
                 ),
 
-                const SizedBox(height: 15),
+                SizedBox(height: 15.h),
                 DefaultTextFormField(
                   hintText: 'University',
                   label: 'University',
@@ -144,7 +141,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                   },
                 ),
 
-                const SizedBox(height: 15),
+                SizedBox(height: 15.h),
                 DefaultTextFormField(
                   hintText: 'College',
                   label: 'College',
@@ -158,7 +155,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 15.h),
                 CustomDropdownButton(
                   hintText: 'Select Year',
                   isExpanded: true,
@@ -172,7 +169,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                     '7th Year',
                   ],
                 ),
-                const SizedBox(height: 15),
+                SizedBox(height: 15.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -187,7 +184,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                             " Birth Date\n${dateFormat.format(selectedDate)}",
                             style: TextTheme.of(
                               context,
-                            ).titleMedium!.copyWith(color: AppTheme.black),
+                            ).titleMedium!.copyWith(color: ColorManager.black),
                           ),
                         ),
                         onTap: () async {
@@ -207,7 +204,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 25),
+                SizedBox(height: 25.h),
                 DefaultElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {

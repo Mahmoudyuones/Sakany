@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sakany/auth/view/screens/login_screen.dart';
-import 'package:sakany/auth/view/screens/verification_screen.dart';
-import 'package:sakany/shared/app_validator.dart';
-import 'package:sakany/shared/apptheme.dart';
-import 'package:sakany/shared/widgets/default_elevated_button.dart';
-import 'package:sakany/shared/widgets/default_text_form_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sakany/core/resources/color_manager.dart';
+import 'package:sakany/core/utils/validator.dart';
+import 'package:sakany/features/auth/presentation/screens/login_screen.dart';
+import 'package:sakany/features/auth/presentation/screens/verification_screen.dart';
+import 'package:sakany/core/widgets/default_elevated_button.dart';
+import 'package:sakany/core/widgets/default_text_form_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -28,61 +29,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
               child: Form(
                 key: formKey,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
-                        height: 50,
-                        width: 50,
+                        height: 50.h,
+                        width: 50.w,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.circular(8.r),
+                          color: ColorManager.primaryColor,
                         ),
                         child: Icon(
                           Icons.home,
-                          size: 40,
-                          color: AppTheme.white,
+                          size: 40.sp,
+                          color: ColorManager.white,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       Text(
                         'Sakany',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       Text('Create your account to fine perfect student home'),
-                      SizedBox(height: 30),
+                      SizedBox(height: 30.h),
                       DefaultTextFormField(
                         hintText: 'Enter your username',
                         icon: Icons.person_2_outlined,
                         label: "Username",
                         isPassword: false,
                         controller: nameController,
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
+                        validator: Validator.validateFullName,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       DefaultTextFormField(
                         hintText: 'Enter your email',
                         icon: Icons.email_outlined,
                         label: 'Email',
                         isPassword: false,
                         controller: emailController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Email can not be empty';
-                          } else if (!AppValidator.isEmailValid(value)) {
-                            return "Invalid Email format";
-                          }
-                          return null;
-                        },
+                        validator: Validator.validateEmail,
                       ),
                       SizedBox(height: 20),
                       DefaultTextFormField(
@@ -91,14 +80,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         label: "Password",
                         isPassword: true,
                         controller: passwordController,
-                        validator: (value) {
-                          if (value == null || value.trim().length < 6) {
-                            return 'Password can not be less than 6 character';
-                          }
-                          return null;
-                        },
+                        validator: Validator.validatePassword,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       DefaultTextFormField(
                         hintText: 'Rewrite your Password',
                         icon: Icons.lock,
@@ -106,13 +90,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isPassword: true,
                         controller: rePasswordController,
                         validator: (value) {
-                          if (value != passwordController.text) {
-                            return 'Password does not match';
-                          }
-                          return null;
+                          return Validator.validateConfirmPassword(
+                            value,
+                            passwordController.text,
+                          );
                         },
                       ),
-                      SizedBox(height: 40),
+                      SizedBox(height: 40.h),
                       DefaultElevatedButton(
                         onPressed: register,
                         text: "Sign up",
@@ -125,20 +109,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: Container(
                                 color: Colors.grey.shade600,
                                 width: double.infinity,
-                                height: 1,
+                                height: 1.h,
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 8.w),
                               child: Text('OR'),
                             ),
                             Expanded(
                               child: Container(
                                 color: Colors.grey.shade600,
                                 width: double.infinity,
-                                height: 1,
+                                height: 1.h,
                               ),
                             ),
                           ],
@@ -148,16 +130,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       DefaultElevatedButton(
                         onPressed: () {},
                         text: "Sign up with Google",
-                        backGroundColor: AppTheme.white,
-                        textColor: AppTheme.black,
+                        backGroundColor: ColorManager.white,
+                        textColor: ColorManager.black,
                         icon: Icons.g_mobiledata,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       DefaultElevatedButton(
                         onPressed: () {},
                         text: "Sign up with Facebook",
-                        backGroundColor: AppTheme.white,
-                        textColor: AppTheme.black,
+                        backGroundColor: ColorManager.white,
+                        textColor: ColorManager.black,
                         icon: Icons.facebook,
                       ),
                       TextButton(
@@ -170,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           'Already have an account? Login',
                           style: TextTheme.of(
                             context,
-                          ).titleSmall!.copyWith(fontSize: 16),
+                          ).titleSmall!.copyWith(fontSize: 16.sp),
                         ),
                       ),
                     ],

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sakany/auth/view/screens/register_screen.dart';
-import 'package:sakany/home/home_screen.dart';
-import 'package:sakany/shared/apptheme.dart';
-import 'package:sakany/shared/widgets/default_elevated_button.dart';
-import 'package:sakany/shared/widgets/default_text_form_field.dart';
-
-import '../../../shared/app_validator.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sakany/core/resources/color_manager.dart';
+import 'package:sakany/core/utils/validator.dart';
+import 'package:sakany/features/auth/presentation/screens/register_screen.dart';
+import 'package:sakany/features/home/home_screen.dart';
+import 'package:sakany/core/widgets/default_elevated_button.dart';
+import 'package:sakany/core/widgets/default_text_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login_screen';
@@ -16,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
@@ -24,56 +24,46 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
             key: formKey,
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 50.h,
+                    width: 50.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: AppTheme.primaryColor,
+                      color: ColorManager.primaryColor,
                     ),
-                    child: Icon(Icons.home, size: 40, color: AppTheme.white),
+                    child: Icon(
+                      Icons.home,
+                      size: 40.sp,
+                      color: ColorManager.white,
+                    ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Text('Sakany', style: Theme.of(context).textTheme.titleLarge),
-                  SizedBox(height: 40),
+                  SizedBox(height: 40.h),
                   DefaultTextFormField(
                     hintText: 'Enter your email',
                     icon: Icons.email,
                     label: 'Email',
                     isPassword: false,
-                    controller: nameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email can not be empty';
-                      } else if (!AppValidator.isEmailValid(value)) {
-                        return "Invalid Email format";
-                      }
-                      return null;
-                    },
+                    controller: emailController,
+                    validator: Validator.validateEmail,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   DefaultTextFormField(
                     hintText: 'Enter password',
                     icon: Icons.lock,
                     label: 'Password',
                     isPassword: true,
                     controller: passwordController,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Password can not be empty';
-                      } else if (value.trim().length < 6) {
-                        return 'PassWord Must be at least 6 digits';
-                      }
-                      return null;
-                    },
+                    validator: Validator.validatePassword,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   DefaultElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
@@ -93,7 +83,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.w,
+                      vertical: 20.h,
+                    ),
                     child: Row(
                       children: [
                         Expanded(
@@ -104,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 8.h),
                           child: Text('OR'),
                         ),
                         Expanded(
@@ -121,16 +114,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   DefaultElevatedButton(
                     onPressed: () {},
                     text: "Login with Google",
-                    backGroundColor: AppTheme.white,
-                    textColor: AppTheme.black,
+                    backGroundColor: ColorManager.white,
+                    textColor: ColorManager.black,
                     icon: Icons.g_mobiledata,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   DefaultElevatedButton(
                     onPressed: () {},
                     text: "Login with Facebook",
-                    backGroundColor: AppTheme.white,
-                    textColor: AppTheme.black,
+                    backGroundColor: ColorManager.white,
+                    textColor: ColorManager.black,
                     icon: Icons.facebook,
                   ),
                   TextButton(
