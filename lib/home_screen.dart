@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
 import 'package:sakany/features/faviortes/faviortes.dart';
 import 'package:sakany/features/home/home_tap.dart';
+import 'package:sakany/features/proile/profile_tap.dart';
+import 'package:sakany/features/services/services_tap.dart';
+import 'package:sakany/features/settings/settings_tap.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home_screen';
@@ -16,9 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> screens = [
     HomeTap(),
     FavoritesTap(),
-    Center(child: Text('Services')),
-    Center(child: Text('Profile')),
-    Center(child: Text('Settings')),
+    ServicesTap(),
+    ProfileTab(),
+    SettingsTab(),
   ];
   int currentIndex = 0;
   @override

@@ -35,7 +35,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
   DateFormat dateFormat = DateFormat("dd/MM/yyyy");
   DateTime selectedDate = DateTime.now();
   bool isLoggedIn = true;
-  bool isOwner = true;
+  bool isOwner = false;
   File? frontImageFile;
   File? backImageFile;
 
@@ -48,17 +48,6 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          isLoggedIn
-              ? AppBar(
-                title: Text(
-                  "Complete Your Profile",
-                  style: TextTheme.of(
-                    context,
-                  ).titleLarge!.copyWith(fontSize: 16),
-                ),
-              )
-              : null,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         child: SafeArea(
@@ -118,7 +107,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                           PhoneInputField(controller: _phoneController),
 
                           // User Type Selection (only show when not logged in)
-                          if (!isLoggedIn || isOwner) ...[
+                          if (!isLoggedIn) ...[
                             SizedBox(height: 15.h),
                             SizedBox(
                               width: double.infinity,
@@ -318,7 +307,7 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                               ),
                             ),
                           ),
-                          if (selectedUserType == 'Owner') ...[
+                          if (selectedUserType == 'Owner' || isOwner) ...[
                             SizedBox(height: 10.h),
                             FadeInDown(
                               child: ClickableIdUpload(
