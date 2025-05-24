@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
 import 'package:sakany/core/utils/validator.dart';
 import 'package:sakany/features/auth/presentation/screens/register_screen.dart';
-import 'package:sakany/features/home/home_screen.dart';
 import 'package:sakany/core/widgets/default_elevated_button.dart';
 import 'package:sakany/core/widgets/default_text_form_field.dart';
+import 'package:sakany/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login_screen';

@@ -6,8 +6,8 @@ import 'package:sakany/features/auth/presentation/screens/login_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/register_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/user_profile_form_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/verification_screen.dart';
-import 'package:sakany/features/home/home_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/landing_page.dart';
+import 'package:sakany/home_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ class SakanyApp extends StatelessWidget {
               HomeScreen.routeName: (_) => HomeScreen(),
               UserProfileFormScreen.routeName: (_) => UserProfileFormScreen(),
             },
-            initialRoute: LandingPage.routeName,
+            initialRoute: UserProfileFormScreen.routeName,
           ),
     );
   }

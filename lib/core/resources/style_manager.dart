@@ -26,9 +26,9 @@ TextStyle getBoldStyle({double? fontSize, required Color color}) =>
     _getTextStyle(fontSize ?? FontSize.s12, FontWeightManager.bold, color);
 
 TextStyle getTextWithLine() => TextStyle(
-  color: ColorManager.primary,
+  color: ColorManager.primaryColor,
   fontSize: FontSize.s12,
   fontWeight: FontWeight.w400,
   decoration: TextDecoration.lineThrough,
-  decorationColor: ColorManager.primary,
+  decorationColor: ColorManager.primaryColor,
 );

@@ -27,6 +27,4 @@ class ColorManager {
   static const Color grey1 = Color(0xff707070);
   static const Color grey2 = Color(0xff797979);
   static const Color error = Color(0xffe61f34);
-
-  static var primary;
 }
