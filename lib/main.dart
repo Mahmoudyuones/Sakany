@@ -34,7 +34,7 @@ class SakanyApp extends StatelessWidget {
               HomeScreen.routeName: (_) => HomeScreen(),
               UserProfileFormScreen.routeName: (_) => UserProfileFormScreen(),
             },
-            initialRoute: HomeScreen.routeName,
+            initialRoute: UserProfileFormScreen.routeName,
           ),
     );
   }

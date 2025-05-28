@@ -1,6 +1,9 @@
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
+import 'package:sakany/core/resources/font_manager.dart';
+import 'package:sakany/core/resources/style_manager.dart' as StylesManager;
 import 'package:sakany/core/utils/validator.dart';
 import 'package:sakany/features/auth/presentation/screens/login_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/verification_screen.dart';
@@ -21,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  int selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +60,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: 10.h),
                       Text('Create your account to fine perfect student home'),
                       SizedBox(height: 30.h),
+                      SizedBox(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                          child: AnimatedToggleSwitch<int>.size(
+                            textDirection: TextDirection.rtl,
+                            current: selectedIndex,
+                            values: const [0, 1],
+                            iconOpacity: 1.0,
+                            indicatorSize: Size(180.w, 50.h),
+                            iconBuilder: (value) {
+                              final isSelected = selectedIndex == value;
+                              return Center(
+                                child: Text(
+                                  value == 0 ? 'Owner' : 'Student',
+                                  style: StylesManager.getBoldStyle(
+                                    color:
+                                        isSelected
+                                            ? ColorManager.white
+                                            : ColorManager.primaryColor,
+                                    fontSize: FontSize.s14,
+                                  ),
+                                ),
+                              );
+                            },
+                            borderWidth: 0.0,
+                            iconAnimationType: AnimationType.onHover,
+                            style: ToggleStyle(
+                              backgroundColor: ColorManager.backGroundColor,
+                              borderRadius: BorderRadius.circular(15.r),
+                              indicatorColor: ColorManager.primaryColor,
+                            ),
+                            onChanged: (i) {
+                              setState(() {
+                                selectedIndex = i;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
                       DefaultTextFormField(
                         hintText: 'Enter your username',
                         icon: Icons.person_2_outlined,
@@ -96,6 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           );
                         },
                       ),
+
                       SizedBox(height: 40.h),
                       DefaultElevatedButton(
                         onPressed: register,
@@ -127,21 +172,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
 
-                      DefaultElevatedButton(
-                        onPressed: () {},
-                        text: "Sign up with Google",
-                        backGroundColor: ColorManager.white,
-                        textColor: ColorManager.black,
-                        icon: Icons.g_mobiledata,
-                      ),
-                      SizedBox(height: 20.h),
-                      DefaultElevatedButton(
-                        onPressed: () {},
-                        text: "Sign up with Facebook",
-                        backGroundColor: ColorManager.white,
-                        textColor: ColorManager.black,
-                        icon: Icons.facebook,
-                      ),
+                      // DefaultElevatedButton(
+                      //   onPressed: () {},
+                      //   text: "Sign up with Google",
+                      //   backGroundColor: ColorManager.white,
+                      //   textColor: ColorManager.black,
+                      //   icon: Icons.g_mobiledata,
+                      // ),
+                      // SizedBox(height: 20.h),
+                      // DefaultElevatedButton(
+                      //   onPressed: () {},
+                      //   text: "Sign up with Facebook",
+                      //   backGroundColor: ColorManager.white,
+                      //   textColor: ColorManager.black,
+                      //   icon: Icons.facebook,
+                      // ),
                       TextButton(
                         onPressed: () {
                           Navigator.of(
