@@ -26,6 +26,7 @@ class SakanyApp extends StatelessWidget {
       splitScreenMode: true,
       builder:
           (_, __) => MaterialApp(
+            debugShowCheckedModeBanner: false,
             routes: {
               LandingPage.routeName: (_) => const LandingPage(),
               RegisterScreen.routeName: (_) => const RegisterScreen(),
@@ -34,7 +35,7 @@ class SakanyApp extends StatelessWidget {
               HomeScreen.routeName: (_) => HomeScreen(),
               UserProfileFormScreen.routeName: (_) => UserProfileFormScreen(),
             },
-            initialRoute: UserProfileFormScreen.routeName,
+            initialRoute: HomeScreen.routeName,
           ),
     );
   }

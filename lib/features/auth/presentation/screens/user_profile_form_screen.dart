@@ -28,9 +28,6 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _universityController = TextEditingController();
-  final TextEditingController _collegeController = TextEditingController();
 
   DateFormat dateFormat = DateFormat("dd/MM/yyyy");
   DateTime selectedDate = DateTime.now();
@@ -109,87 +106,6 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                             // Phone Number
                             PhoneInputField(controller: _phoneController),
 
-                            // if (isOwner) ...[
-                            //   SizedBox(height: 15.h),
-
-                            //   // Address
-                            //   DefaultTextFormField(
-                            //     hintText: 'Address',
-                            //     label: 'Address',
-                            //     icon: null,
-                            //     isPassword: false,
-                            //     controller: _addressController,
-                            //     validator: (value) {
-                            //       if (value == null || value.trim().isEmpty) {
-                            //         return 'Please Enter Your Address';
-                            //       }
-                            //       return null;
-                            //     },
-                            //   ),
-
-                            //   SizedBox(height: 15.h),
-
-                            //   // University
-                            //   DefaultTextFormField(
-                            //     hintText: 'University',
-                            //     label: 'University',
-                            //     icon: null,
-                            //     isPassword: false,
-                            //     controller: _universityController,
-                            //     validator: (value) {
-                            //       if (value == null || value.trim().isEmpty) {
-                            //         return 'Please Enter Your University';
-                            //       }
-                            //       return null;
-                            //     },
-                            //   ),
-
-                            //   SizedBox(height: 15.h),
-
-                            //   // College
-                            //   DefaultTextFormField(
-                            //     hintText: 'College',
-                            //     label: 'College',
-                            //     icon: null,
-                            //     isPassword: false,
-                            //     controller: _collegeController,
-                            //     validator: (value) {
-                            //       if (value == null || value.trim().isEmpty) {
-                            //         return 'Please Enter Your College';
-                            //       }
-                            //       return null;
-                            //     },
-                            //   ),
-
-                            //   SizedBox(height: 15.h),
-
-                            //   // Academic Year
-                            //   CustomDropdownButton(
-                            //     hintText: 'Select Year',
-                            //     isExpanded: true,
-                            //     list: [
-                            //       '1st Year',
-                            //       '2nd Year',
-                            //       '3rd Year',
-                            //       '4th Year',
-                            //       '5th Year',
-                            //       '6th Year',
-                            //       '7th Year',
-                            //     ],
-                            //     value: selectedYear,
-                            //     onChanged: (value) {
-                            //       setState(() {
-                            //         selectedYear = value;
-                            //       });
-                            //     },
-                            //     validator: (value) {
-                            //       if (value == null || value.isEmpty) {
-                            //         return 'Please select your academic year';
-                            //       }
-                            //       return null;
-                            //     },
-                            //   ),
-                            // ],
                             if (isOwner) SizedBox(height: 15.h),
 
                             // Gender and Religion Row
