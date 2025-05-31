@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sakany/core/resources/color_manager.dart';
+import 'package:sakany/core/resources/font_manager.dart';
+import 'package:sakany/core/resources/style_manager.dart';
 
 class SettingsTab extends StatefulWidget {
   const SettingsTab({super.key});
@@ -19,26 +22,22 @@ class _SettingsTabState extends State<SettingsTab> {
       children: [
         Text(
           'Settings',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+          style: getBoldStyle(
+            color: ColorManager.black,
+            fontSize: FontSize.s24,
+          ),
         ),
         const SizedBox(height: 20),
 
-        // Notifications toggle
-        SwitchListTile(
-          title: const Text('Enable Notifications'),
-          value: isNotificationsEnabled,
-          onChanged: (val) {
-            setState(() {
-              isNotificationsEnabled = val;
-            });
-          },
-        ),
-
         // Dark mode toggle
         SwitchListTile(
-          title: const Text('Dark Mode'),
+          title: Text(
+            'Dark Mode',
+            style: getBoldStyle(
+              color: ColorManager.primaryColor,
+              fontSize: FontSize.s18,
+            ),
+          ),
           value: isDarkMode,
           onChanged: (val) {
             setState(() {
@@ -52,7 +51,13 @@ class _SettingsTabState extends State<SettingsTab> {
         // Language switcher
         ListTile(
           leading: const Icon(Icons.language),
-          title: const Text('Language'),
+          title: Text(
+            'Language',
+            style: getBoldStyle(
+              color: ColorManager.primaryColor,
+              fontSize: FontSize.s18,
+            ),
+          ),
           trailing: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: selectedLanguage,
@@ -76,7 +81,13 @@ class _SettingsTabState extends State<SettingsTab> {
         // About
         ListTile(
           leading: const Icon(Icons.info_outline),
-          title: const Text('About App'),
+          title: Text(
+            'About App',
+            style: getBoldStyle(
+              color: ColorManager.primaryColor,
+              fontSize: FontSize.s18,
+            ),
+          ),
           onTap: () {
             showAboutDialog(
               context: context,
@@ -90,7 +101,13 @@ class _SettingsTabState extends State<SettingsTab> {
         // Logout
         ListTile(
           leading: const Icon(Icons.logout),
-          title: const Text('Logout'),
+          title: Text(
+            'Logout',
+            style: getBoldStyle(
+              color: ColorManager.primaryColor,
+              fontSize: FontSize.s18,
+            ),
+          ),
           onTap: () {
             ScaffoldMessenger.of(
               context,
