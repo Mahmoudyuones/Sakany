@@ -6,9 +6,8 @@ class ApartmentCard extends StatelessWidget {
   final String location;
   final int numberOfRooms;
   final int totalBeds;
-  final int availableBeds;
   final List<String> features;
-  final int price;
+  final double price;
   final bool isFavorite;
   final VoidCallback onFavoriteToggle;
   final VoidCallback onDetailsPressed;
@@ -20,7 +19,6 @@ class ApartmentCard extends StatelessWidget {
     required this.location,
     required this.numberOfRooms,
     required this.totalBeds,
-    required this.availableBeds,
     required this.features,
     required this.price,
     required this.isFavorite,
@@ -55,7 +53,6 @@ class ApartmentCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image with favorite icon
           Stack(
             children: [
               ClipRRect(
@@ -67,21 +64,6 @@ class ApartmentCard extends StatelessWidget {
                   width: double.infinity,
                   height: 180,
                   fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 10,
-                right: 10,
-                child: InkWell(
-                  onTap: onFavoriteToggle,
-                  borderRadius: BorderRadius.circular(30),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white.withOpacity(0.9),
-                    child: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.grey,
-                    ),
-                  ),
                 ),
               ),
             ],
@@ -118,9 +100,6 @@ class ApartmentCard extends StatelessWidget {
                     Text('$totalBeds beds'),
 
                     const SizedBox(width: 16),
-                    Icon(Icons.check_circle, size: 18, color: Colors.green),
-                    const SizedBox(width: 4),
-                    Text('$availableBeds available'),
                   ],
                 ),
                 const SizedBox(height: 8),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
-import 'package:sakany/features/faviortes/faviortes.dart';
 import 'package:sakany/features/home/home_tap.dart';
 import 'package:sakany/features/proile/profile_tap.dart';
 import 'package:sakany/features/services/services_tap.dart';
@@ -18,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> screens = [
     HomeTap(),
-    FavoritesTap(),
     ServicesTap(),
     ProfileTab(),
     SettingsTab(),
@@ -55,10 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications_active),
             label: 'Services',

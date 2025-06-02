@@ -5,7 +5,10 @@ import 'package:sakany/core/widgets/default_elevated_button.dart';
 import 'package:sakany/core/widgets/loading_indecator.dart';
 
 class UIUtils {
-  static void showFilterDialog(BuildContext context) {
+  static void showFilterDialog(
+    BuildContext context, {
+    required void Function(String? selectedLocation, double maxPrice) onApply,
+  }) {
     showDialog(
       context: context,
       builder: (context) {
@@ -36,7 +39,6 @@ class UIUtils {
                               ),
                             )
                             .toList(),
-
                     onChanged: (value) {
                       setState(() => selectedFeature = value);
                     },
@@ -60,7 +62,15 @@ class UIUtils {
                   ),
                 ],
               ),
-              actions: [DefaultElevatedButton(onPressed: () {}, text: "Apply")],
+              actions: [
+                DefaultElevatedButton(
+                  onPressed: () {
+                    onApply(selectedFeature, priceRange.end);
+                    Navigator.of(context).pop();
+                  },
+                  text: "Apply",
+                ),
+              ],
             );
           },
         );
