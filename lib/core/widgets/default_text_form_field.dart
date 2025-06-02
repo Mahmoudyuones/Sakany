@@ -9,6 +9,7 @@ class DefaultTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool isPassword;
   final TextEditingController controller;
+  final bool enabled;
   const DefaultTextFormField({
     super.key,
     required this.hintText,
@@ -17,6 +18,7 @@ class DefaultTextFormField extends StatefulWidget {
     this.validator,
     required this.isPassword,
     required this.controller,
+    this.enabled = true,
   });
 
   @override
@@ -31,6 +33,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
       validator: widget.validator,
       obscureText: isObscure,
       controller: widget.controller,
+      enabled: widget.enabled,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: widget.label,

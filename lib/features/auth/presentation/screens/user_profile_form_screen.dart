@@ -12,7 +12,7 @@ import 'package:sakany/core/widgets/custom_dropdown_button.dart';
 import 'package:sakany/core/widgets/default_elevated_button.dart';
 import 'package:sakany/core/widgets/default_text_form_field.dart';
 import 'package:sakany/features/auth/data/data_source/image_picker_functions.dart';
-import 'package:sakany/home_screen.dart';
+import 'package:sakany/features/auth/data/data_source/local/remote/clodarinay_service.dart';
 
 class UserProfileFormScreen extends StatefulWidget {
   static const String routeName = '/User_profile_form';
@@ -33,8 +33,13 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
   DateTime selectedDate = DateTime.now();
 
   bool isOwner = true;
+  File? profileImage;
+  String? profileImageURL;
+
   File? frontImageFile;
+  String? frontImageFileURL;
   File? backImageFile;
+  String? backImageFileURL;
 
   String? selectedGender;
   String? selectedReligion;
@@ -59,10 +64,15 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                         key: _formKey,
                         child: Column(
                           children: [
-                            ProfileImage(),
+                            ProfileImage(
+                              onImageUploaded: (url) {
+                                setState(() {
+                                  profileImageURL = url;
+                                });
+                              },
+                            ),
                             SizedBox(height: 30.h),
 
-                            // First Name and Last Name Row
                             Row(
                               children: [
                                 Expanded(
@@ -232,6 +242,19 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                                                         await ImagePickerFunctions.gallery();
                                                     if (temp != null) {
                                                       frontImageFile = temp;
+                                                      final imageUrl =
+                                                          await CloudinaryService.uploadImage(
+                                                            frontImageFile!,
+                                                          );
+
+                                                      if (imageUrl != null) {
+                                                        frontImageFileURL =
+                                                            imageUrl;
+                                                      } else {
+                                                        print(
+                                                          '❌ Failed to upload image',
+                                                        );
+                                                      }
                                                     }
                                                     setState(() {});
                                                     Navigator.of(context).pop();
@@ -259,6 +282,19 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                                                         await ImagePickerFunctions.camera();
                                                     if (temp != null) {
                                                       frontImageFile = temp;
+                                                      final imageUrl =
+                                                          await CloudinaryService.uploadImage(
+                                                            frontImageFile!,
+                                                          );
+
+                                                      if (imageUrl != null) {
+                                                        frontImageFileURL =
+                                                            imageUrl;
+                                                      } else {
+                                                        print(
+                                                          '❌ Failed to upload image',
+                                                        );
+                                                      }
                                                     }
                                                     setState(() {});
                                                     Navigator.of(context).pop();
@@ -310,6 +346,19 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                                                         await ImagePickerFunctions.gallery();
                                                     if (temp != null) {
                                                       backImageFile = temp;
+                                                      final imageUrl =
+                                                          await CloudinaryService.uploadImage(
+                                                            frontImageFile!,
+                                                          );
+
+                                                      if (imageUrl != null) {
+                                                        backImageFileURL =
+                                                            imageUrl;
+                                                      } else {
+                                                        print(
+                                                          '❌ Failed to upload image',
+                                                        );
+                                                      }
                                                     }
                                                     setState(() {});
                                                     Navigator.of(context).pop();
@@ -337,6 +386,19 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                                                         await ImagePickerFunctions.camera();
                                                     if (temp != null) {
                                                       backImageFile = temp;
+                                                      final imageUrl =
+                                                          await CloudinaryService.uploadImage(
+                                                            frontImageFile!,
+                                                          );
+
+                                                      if (imageUrl != null) {
+                                                        backImageFileURL =
+                                                            imageUrl;
+                                                      } else {
+                                                        print(
+                                                          '❌ Failed to upload image',
+                                                        );
+                                                      }
                                                     }
                                                     setState(() {});
                                                     Navigator.of(context).pop();
@@ -377,11 +439,9 @@ class _UserProfileFormScreenState extends State<UserProfileFormScreen> {
                             // Submit Button
                             DefaultElevatedButton(
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  Navigator.of(
-                                    context,
-                                  ).pushReplacementNamed(HomeScreen.routeName);
-                                }
+                                print(profileImageURL);
+                                print(frontImageFileURL);
+                                print(backImageFileURL);
                               },
                               text: 'Submit',
                             ),

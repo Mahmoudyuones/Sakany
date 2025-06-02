@@ -1,4 +1,5 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
@@ -6,7 +7,6 @@ import 'package:sakany/core/resources/font_manager.dart';
 import 'package:sakany/core/resources/style_manager.dart' as StylesManager;
 import 'package:sakany/core/utils/validator.dart';
 import 'package:sakany/features/auth/presentation/screens/login_screen.dart';
-import 'package:sakany/features/auth/presentation/screens/verification_screen.dart';
 import 'package:sakany/core/widgets/default_elevated_button.dart';
 import 'package:sakany/core/widgets/default_text_form_field.dart';
 
@@ -19,7 +19,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController nameController = TextEditingController();
+  final Dio dio = Dio();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
@@ -101,12 +103,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       SizedBox(height: 10.h),
                       DefaultTextFormField(
-                        hintText: 'Enter your username',
+                        hintText: 'Enter your first name',
                         icon: Icons.person_2_outlined,
-                        label: "Username",
+                        label: "First name",
                         isPassword: false,
-                        controller: nameController,
-                        validator: Validator.validateFullName,
+                        controller: firstNameController,
+                        //validator: Validator.,
+                      ),
+                      SizedBox(height: 20.h),
+
+                      DefaultTextFormField(
+                        hintText: 'Enter your last name',
+                        icon: Icons.person_2_outlined,
+                        label: "Last name",
+                        isPassword: false,
+                        controller: lastNameController,
+                        //  validator: Validator.validateFullName,
                       ),
                       SizedBox(height: 20.h),
                       DefaultTextFormField(
@@ -211,12 +223,71 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void register() {
+  void register() async {
     FocusScope.of(context).unfocus();
-    if (formKey.currentState!.validate()) {
-      Navigator.of(context).pushNamed(
-        VerificationScreen.routeName,
-        arguments: emailController.text,
+    if (!formKey.currentState!.validate()) return;
+
+    final String email = emailController.text.trim();
+    final String password = passwordController.text.trim();
+    final String confirmPassword = rePasswordController.text.trim();
+    final bool isOwner = selectedIndex == 0;
+
+    try {
+      final response = await dio.post(
+        'https://creative-endlessly-bullfrog.ngrok-free.app/api/Auth/register',
+        data: {
+          "firstName": firstNameController.text,
+          "lastName": lastNameController.text,
+          "email": email,
+          "password": password,
+          "confirmPassword": confirmPassword,
+          "role": isOwner ? "Owner" : "Student",
+        },
+      );
+
+      final data = response.data;
+      if (data['success'] == true) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(' registered successfully')));
+      } else {
+        final message = data['message'] ?? 'Something went wrong';
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(message)));
+      }
+    } on DioException catch (e) {
+      String errorMessage = 'Something went wrong. Please try again.';
+
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.sendTimeout ||
+          e.type == DioExceptionType.receiveTimeout) {
+        errorMessage = 'Connection timed out. Please try again.';
+      } else if (e.type == DioExceptionType.connectionError ||
+          e.error.toString().contains('SocketException')) {
+        errorMessage =
+            'Server is offline. Please check your internet connection.';
+      } else if (e.response != null) {
+        final responseData = e.response!.data;
+
+        if (responseData is Map && responseData.containsKey('message')) {
+          errorMessage = responseData['message'];
+        } else if (responseData is String && responseData.contains('<html')) {
+          // HTML response like ngrok error page
+          errorMessage =
+              'Server is unreachable or offline. Please try again later.';
+        } else {
+          errorMessage = 'Unexpected response from the server.';
+        }
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+    } catch (e) {
+      // Catch any other unexpected error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Unexpected error: ${e.toString()}')),
       );
     }
   }

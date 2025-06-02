@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
@@ -6,6 +7,7 @@ import 'package:sakany/features/auth/presentation/screens/register_screen.dart';
 import 'package:sakany/core/widgets/default_elevated_button.dart';
 import 'package:sakany/core/widgets/default_text_form_field.dart';
 import 'package:sakany/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login_screen';
@@ -65,14 +67,75 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 20.h),
                   DefaultElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
                         FocusScope.of(context).unfocus();
-                        Navigator.of(
-                          context,
-                        ).pushReplacementNamed(HomeScreen.routeName);
+
+                        final dio = Dio();
+                        final url =
+                            'https://creative-endlessly-bullfrog.ngrok-free.app/api/Auth/login';
+
+                        try {
+                          final response = await dio.post(
+                            url,
+                            data: {
+                              'email': emailController.text.trim(),
+                              'password': passwordController.text.trim(),
+                            },
+                            options: Options(
+                              headers: {'Content-Type': 'application/json'},
+                            ),
+                          );
+
+                          if (response.statusCode == 200) {
+                            final data = response.data;
+                            final token = data['token'];
+                            if (data['success'] == true) {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setString('token', token);
+
+                              Navigator.of(
+                                context,
+                              ).pushReplacementNamed(HomeScreen.routeName);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    data['message'] ?? 'Login failed',
+                                  ),
+                                ),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Login failed. Try again later.'),
+                              ),
+                            );
+                          }
+                        } on DioError catch (e) {
+                          String errorMessage =
+                              'Unexpected error. Please check your connection.';
+                          if (e.type == DioErrorType.connectionTimeout ||
+                              e.type == DioErrorType.sendTimeout ||
+                              e.type == DioErrorType.receiveTimeout) {
+                            errorMessage =
+                                'Connection timed out. Please try again.';
+                          } else if (e.type == DioErrorType.badResponse) {
+                            errorMessage = 'Invalid email or password.';
+                          } else if (e.type == DioErrorType.unknown) {
+                            errorMessage =
+                                'Server is unreachable. Check your internet or server.';
+                          }
+
+                          ScaffoldMessenger.of(
+                            context,
+                          ).showSnackBar(SnackBar(content: Text(errorMessage)));
+                        }
                       }
                     },
+
                     text: 'Login',
                   ),
                   TextButton(
@@ -111,21 +174,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  DefaultElevatedButton(
-                    onPressed: () {},
-                    text: "Login with Google",
-                    backGroundColor: ColorManager.white,
-                    textColor: ColorManager.black,
-                    icon: Icons.g_mobiledata,
-                  ),
-                  SizedBox(height: 20.h),
-                  DefaultElevatedButton(
-                    onPressed: () {},
-                    text: "Login with Facebook",
-                    backGroundColor: ColorManager.white,
-                    textColor: ColorManager.black,
-                    icon: Icons.facebook,
-                  ),
+                  // DefaultElevatedButton(
+                  // //   onPressed: () {},
+                  // //   text: "Login with Google",
+                  // //   backGroundColor: ColorManager.white,
+                  // //   textColor: ColorManager.black,
+                  // //   icon: Icons.g_mobiledata,
+                  // // ),
+                  // // SizedBox(height: 20.h),
+                  // // DefaultElevatedButton(
+                  // //   onPressed: () {},
+                  // //   text: "Login with Facebook",
+                  // //   backGroundColor: ColorManager.white,
+                  // //   textColor: ColorManager.black,
+                  // //   icon: Icons.facebook,
+                  // // ),
                   TextButton(
                     onPressed: () {
                       Navigator.of(

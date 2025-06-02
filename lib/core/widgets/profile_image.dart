@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
 import 'package:sakany/features/auth/data/data_source/image_picker_functions.dart';
+import 'package:sakany/features/auth/data/data_source/local/remote/clodarinay_service.dart';
 
 class ProfileImage extends StatefulWidget {
-  const ProfileImage({super.key});
+  final Function(String) onImageUploaded;
+  const ProfileImage({super.key, required this.onImageUploaded});
 
   @override
   State<ProfileImage> createState() => _ProfileImageState();
@@ -14,6 +16,29 @@ class ProfileImage extends StatefulWidget {
 
 class _ProfileImageState extends State<ProfileImage> {
   File? imageFile;
+
+  Future<void> _pickImage(bool fromGallery) async {
+    final temp =
+        fromGallery
+            ? await ImagePickerFunctions.gallery()
+            : await ImagePickerFunctions.camera();
+
+    if (temp != null) {
+      setState(() => imageFile = temp);
+
+      // Upload to Cloudinary
+      final imageUrl = await CloudinaryService.uploadImage(imageFile!);
+
+      if (imageUrl != null) {
+        widget.onImageUploaded(imageUrl);
+        print('✅ Uploaded Image URL: $imageUrl');
+      } else {
+        print('❌ Failed to upload image');
+      }
+    }
+
+    if (context.mounted) Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +75,7 @@ class _ProfileImageState extends State<ProfileImage> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   GestureDetector(
-                                    onTap: () async {
-                                      var temp =
-                                          await ImagePickerFunctions.gallery();
-                                      if (temp != null) {
-                                        imageFile = temp;
-                                      }
-                                      setState(() {});
-                                      Navigator.of(context).pop();
-                                    },
+                                    onTap: () => _pickImage(true), // Gallery
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -74,15 +91,7 @@ class _ProfileImageState extends State<ProfileImage> {
                                   ),
                                   SizedBox(width: 24.w),
                                   GestureDetector(
-                                    onTap: () async {
-                                      var temp =
-                                          await ImagePickerFunctions.camera();
-                                      if (temp != null) {
-                                        imageFile = temp;
-                                      }
-                                      setState(() {});
-                                      Navigator.of(context).pop();
-                                    },
+                                    onTap: () => _pickImage(false), // Camera
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [

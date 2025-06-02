@@ -34,10 +34,10 @@ class _ProfileTabState extends State<ProfileTab> {
   DateFormat dateFormat = DateFormat("dd/MM/yyyy");
   DateTime selectedDate = DateTime.now();
 
-  bool isOwner = true;
+  bool isOwner = false;
   File? frontImageFile;
   File? backImageFile;
-
+  String? profileImageURL;
   String? selectedGender;
   String? selectedReligion;
   String? selectedYear;
@@ -57,7 +57,13 @@ class _ProfileTabState extends State<ProfileTab> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        ProfileImage(),
+                        ProfileImage(
+                          onImageUploaded: (url) {
+                            setState(() {
+                              profileImageURL = url;
+                            });
+                          },
+                        ),
                         SizedBox(height: 30.h),
 
                         // First Name and Last Name Row
