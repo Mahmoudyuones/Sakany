@@ -37,6 +37,11 @@ class _LandingPageState extends State<LandingPage> {
       'subtitle':
           'Every listing is reviewed and approved to ensure safety and trust.',
     },
+    {
+      'image': 'assets/images/image4.jpg',
+      'title': 'Have an apartment you want to rent ',
+      'subtitle': 'You can post it easily so every student can see it',
+    },
   ];
 
   void _goToNextPage() {

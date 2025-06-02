@@ -94,7 +94,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               final prefs =
                                   await SharedPreferences.getInstance();
                               await prefs.setString('token', token);
-
+                              await prefs.setString(
+                                'userId',
+                                data['user']['id'],
+                              );
+                              await prefs.setInt(
+                                'userRole',
+                                data['user']['role'],
+                              );
+                              print(token);
+                              print(data['user']['id']);
+                              print(data['user']['role']);
                               Navigator.of(
                                 context,
                               ).pushReplacementNamed(HomeScreen.routeName);

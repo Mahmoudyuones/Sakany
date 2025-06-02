@@ -4,13 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/app_bloc_observer.dart';
 import 'package:sakany/features/auth/presentation/screens/login_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/register_screen.dart';
-import 'package:sakany/features/auth/presentation/screens/user_profile_form_screen.dart';
-import 'package:sakany/features/auth/presentation/screens/verification_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/landing_page.dart';
 import 'package:sakany/home_screen.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
   Bloc.observer = AppBlocObserver();
   runApp(const SakanyApp());
 }
@@ -31,9 +30,9 @@ class SakanyApp extends StatelessWidget {
               LandingPage.routeName: (_) => const LandingPage(),
               RegisterScreen.routeName: (_) => const RegisterScreen(),
               LoginScreen.routeName: (_) => LoginScreen(),
-              VerificationScreen.routeName: (_) => VerificationScreen(),
+              //   VerificationScreen.routeName: (_) => VerificationScreen(),
               HomeScreen.routeName: (_) => HomeScreen(),
-              UserProfileFormScreen.routeName: (_) => UserProfileFormScreen(),
+              //  UserProfileFormScreen.routeName: (_) => UserProfileFormScreen(),
             },
             initialRoute: LandingPage.routeName,
           ),
