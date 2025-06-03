@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sakany/core/resources/color_manager.dart';
 import 'package:sakany/core/resources/font_manager.dart';
 import 'package:sakany/core/resources/style_manager.dart';
+import 'package:sakany/features/auth/presentation/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsTab extends StatefulWidget {
   const SettingsTab({super.key});
@@ -14,6 +16,63 @@ class _SettingsTabState extends State<SettingsTab> {
   bool isDarkMode = false;
   bool isNotificationsEnabled = true;
   String selectedLanguage = 'English';
+
+  Future<void> _logout() async {
+    // Show confirmation dialog
+    final bool? confirm = await showDialog<bool>(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Confirm Logout'),
+            content: const Text('Are you sure you want to log out?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(
+                  'Cancel',
+                  style: getBoldStyle(
+                    color: ColorManager.primaryColor,
+                    fontSize: FontSize.s16,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(
+                  'Logout',
+                  style: getBoldStyle(
+                    color: ColorManager.primaryColor,
+                    fontSize: FontSize.s16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+    );
+
+    // Proceed only if user confirms
+    if (confirm != true) return;
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      // Selectively clear authentication-related keys
+      await prefs.remove('userId');
+      await prefs.remove('token');
+
+      // Navigate to login screen
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+
+      // Show feedback after navigation
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Successfully logged out')));
+    } catch (e) {
+      // Handle errors
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error logging out: $e')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,11 +167,7 @@ class _SettingsTabState extends State<SettingsTab> {
               fontSize: FontSize.s18,
             ),
           ),
-          onTap: () {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('Logged out')));
-          },
+          onTap: _logout,
         ),
       ],
     );

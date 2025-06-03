@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
+import 'package:sakany/core/utils/ui_utils.dart';
 import 'package:sakany/core/utils/validator.dart';
 import 'package:sakany/features/auth/presentation/screens/register_screen.dart';
 import 'package:sakany/core/widgets/default_elevated_button.dart';
@@ -69,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   DefaultElevatedButton(
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
+                        UIUtils.showLoading(context);
                         FocusScope.of(context).unfocus();
 
                         final dio = Dio();
@@ -102,13 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 'userRole',
                                 data['user']['role'],
                               );
-                              print(token);
-                              print(data['user']['id']);
-                              print(data['user']['role']);
+
+                              UIUtils.hideLoading(context);
                               Navigator.of(
                                 context,
                               ).pushReplacementNamed(HomeScreen.routeName);
                             } else {
+                              UIUtils.hideLoading(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -118,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                             }
                           } else {
+                            UIUtils.hideLoading(context);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Login failed. Try again later.'),
@@ -138,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             errorMessage =
                                 'Server is unreachable. Check your internet or server.';
                           }
-
+                          UIUtils.hideLoading(context);
                           ScaffoldMessenger.of(
                             context,
                           ).showSnackBar(SnackBar(content: Text(errorMessage)));

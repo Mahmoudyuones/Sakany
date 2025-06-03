@@ -8,7 +8,13 @@ import 'package:sakany/features/auth/data/data_source/local/remote/clodarinay_se
 
 class ProfileImage extends StatefulWidget {
   final Function(String) onImageUploaded;
-  const ProfileImage({super.key, required this.onImageUploaded});
+  final String? initialImageUrl;
+
+  const ProfileImage({
+    super.key,
+    required this.onImageUploaded,
+    this.initialImageUrl,
+  });
 
   @override
   State<ProfileImage> createState() => _ProfileImageState();
@@ -54,9 +60,13 @@ class _ProfileImageState extends State<ProfileImage> {
                   radius: 70.r,
                   backgroundColor: ColorManager.gray,
                   backgroundImage:
-                      imageFile != null ? FileImage(imageFile!) : null,
+                      imageFile != null
+                          ? FileImage(imageFile!)
+                          : (widget.initialImageUrl != null
+                              ? NetworkImage(widget.initialImageUrl!)
+                              : null),
                   child:
-                      imageFile == null
+                      imageFile == null && widget.initialImageUrl == null
                           ? Icon(Icons.person, size: 80.sp, color: Colors.white)
                           : null,
                 ),
