@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakany/core/resources/color_manager.dart';
+import 'package:sakany/features/add_apartment_screen.dart';
 import 'package:sakany/features/home/home_tap.dart';
 import 'package:sakany/features/proile/profile_tap.dart';
 import 'package:sakany/features/services/services_tap.dart';
 import 'package:sakany/features/settings/settings_tap.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home_screen';
@@ -15,6 +17,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int? userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  void _loadUserRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userRole = prefs.getInt('userRole');
+    });
+  }
+
   List<Widget> screens = [
     HomeTap(),
     ServicesTap(),
@@ -38,6 +55,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: screens[currentIndex],
+      floatingActionButton:
+          userRole ==
+                  1 // show only for owners
+              ? FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AddApartmentScreen.routeName);
+                },
+                backgroundColor: ColorManager.white,
+                child: Icon(Icons.add),
+              )
+              : null,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         type: BottomNavigationBarType.fixed,

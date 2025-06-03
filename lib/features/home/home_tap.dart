@@ -183,7 +183,8 @@ class _HomeTapState extends State<HomeTap> {
                           return Skeletonizer(
                             enabled: _isLoading,
                             child: ApartmentCard(
-                              imageUrl: 'placeholder_image_url',
+                              imageUrl:
+                                  'https://imgs.search.brave.com/E3P5AwBWUafsZlLgov0KnDjUKQ0ARRPZuCdLq_kgsXo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTM4/NDY0Mjg4NC9waG90/by90aGUtZXZlbmlu/Zy1zdW4taXMtcmVm/bGVjdGVkLWluLXRo/ZS1tb2Rlcm4tZ2xh/c3MtZmFjYWRlLXdp/dGgtYmFsY29uaWVz/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz1qczFqZmQ2SVZJ/YmRmU0l3WUhXNHds/RDQyMFd0U1Npa29s/Vmp6RkJRMlFrPQ',
                               title: 'Loading...',
                               location: 'Loading...',
                               numberOfRooms: 0,

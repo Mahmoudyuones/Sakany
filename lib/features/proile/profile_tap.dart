@@ -12,11 +12,23 @@ import 'package:sakany/core/widgets/custom_dropdown_button.dart';
 import 'package:sakany/core/widgets/default_elevated_button.dart';
 import 'package:sakany/core/widgets/default_text_form_field.dart';
 import 'package:sakany/core/widgets/phone_input_field.dart';
+
 import 'package:sakany/core/widgets/profile_image.dart';
 import 'package:sakany/features/auth/data/data_source/image_picker_functions.dart';
+import 'package:sakany/features/auth/data/data_source/local/remote/clodarinay_service.dart';
+import 'package:sakany/features/proile/owner_model.dart';
+import 'package:sakany/features/proile/owner_service.dart';
 import 'package:sakany/features/proile/student_model.dart';
 import 'package:sakany/features/proile/student_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+class ProfileData {
+  final bool isOwner;
+  final StudentModel? studentData;
+  final OwnerModel? ownerData;
+
+  ProfileData({required this.isOwner, this.studentData, this.ownerData});
+}
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -26,7 +38,7 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
-  late Future<StudentModel> _studentFuture;
+  late Future<ProfileData> _profileFuture;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -39,57 +51,99 @@ class _ProfileTabState extends State<ProfileTab> {
 
   DateFormat dateFormat = DateFormat("dd/MM/yyyy");
 
-  bool isOwner = false;
+  bool? isOwner;
   File? frontImageFile;
   File? backImageFile;
   String? profileImageURL;
+  String? frontIDImageURL;
+  String? backIDImageURL;
   String? selectedGender;
   String? selectedReligion;
 
-  bool _isInitialDataSet = false; // Flag to track if initial data is set
+  bool _isInitialDataSet = false;
 
   @override
   void initState() {
     super.initState();
-    _studentFuture = _getStudentFuture();
+    _profileFuture = _getProfileFuture();
   }
 
-  Future<StudentModel> _getStudentFuture() async {
+  Future<ProfileData> _getProfileFuture() async {
     final prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
-    if (userId != null) {
-      print(userId);
-      return StudentService.fetchStudentData(userId);
-    } else {
+    if (userId == null) {
       throw Exception('User ID not found');
+    }
+    final userRole = prefs.getInt('userRole');
+    final isOwnerLocal = userRole == 1;
+    if (isOwnerLocal) {
+      final ownerData = await OwnerService.fetchOwnerData(userId);
+      return ProfileData(isOwner: true, ownerData: ownerData);
+    } else {
+      final studentData = await StudentService.fetchStudentData(userId);
+      return ProfileData(isOwner: false, studentData: studentData);
     }
   }
 
-  Future<void> _editStudent() async {
+  Future<void> _editProfile() async {
     final prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
+    if (userId == null) {
+      throw Exception('User ID not found');
+    }
     try {
-      await StudentService.editStudentData(
-        studentId: userId!,
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text,
-        collegeName: _collegeController.text,
-        age: int.tryParse(_ageController.text) ?? 0,
-        origin: _addressController.text,
-        religon: selectedReligion ?? '',
-        profilePhoto: profileImageURL ?? '',
-        phoneNumber: _phoneController.text,
-        gender: selectedGender ?? '',
-      );
+      if (!isOwner!) {
+        await StudentService.editStudentData(
+          studentId: userId,
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          collegeName: _collegeController.text,
+          age: int.tryParse(_ageController.text) ?? 0,
+          origin: _addressController.text,
+          religon: selectedReligion ?? '',
+          profilePhoto: profileImageURL ?? '',
+          phoneNumber: _phoneController.text,
+          gender: selectedGender ?? '',
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated successfully')),
+        );
+      } else {
+        frontIDImageURL =
+            frontImageFile != null
+                ? await CloudinaryService.uploadImage(frontImageFile!)
+                : '';
+        backIDImageURL =
+            backImageFile != null
+                ? await CloudinaryService.uploadImage(backImageFile!)
+                : "";
+        await OwnerService.editOwnerData(
+          ownerId: userId,
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          residence: _addressController.text,
+          religion: selectedReligion ?? '',
+          profilePhoto: profileImageURL ?? '',
+          phoneNumber: _phoneController.text,
+          frontId: frontIDImageURL ?? '',
+          backId: backIDImageURL ?? '',
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated successfully')),
+        );
+      }
     } catch (e) {
-      print('Something went wrong: $e');
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error updating profile: $e')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<StudentModel>(
-      future: _studentFuture,
+    return FutureBuilder<ProfileData>(
+      future: _profileFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -98,23 +152,40 @@ class _ProfileTabState extends State<ProfileTab> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          // Set initial data only once
+          final profileData = snapshot.data!;
           if (!_isInitialDataSet) {
-            final student = snapshot.data!;
-            _firstNameController.text = student.firstName;
-            _lastNameController.text = student.lastName;
-            _phoneController.text = student.phoneNumber ?? '';
-            _addressController.text = student.origin ?? '';
-            _collegeController.text = student.collegeName ?? '';
-            _ageController.text = student.age?.toString() ?? '';
-            profileImageURL = student.profilePhoto;
-            selectedGender = student.gender;
-            selectedReligion =
-                student.religon == 'Muslim'
-                    ? 'Muslim'
-                    : student.religon == 'Christian'
-                    ? 'Christian'
-                    : null; // Update if religion is available
+            isOwner = profileData.isOwner;
+            if (!isOwner!) {
+              final student = profileData.studentData!;
+              _firstNameController.text = student.firstName;
+              _lastNameController.text = student.lastName;
+              _phoneController.text = student.phoneNumber ?? '';
+              _addressController.text = student.origin ?? '';
+              _collegeController.text = student.collegeName ?? '';
+              _ageController.text = student.age?.toString() ?? '';
+              profileImageURL = student.profilePhoto;
+              selectedGender = student.gender;
+              selectedReligion =
+                  student.religon == 'Muslim'
+                      ? 'Muslim'
+                      : student.religon == 'Christian'
+                      ? 'Christian'
+                      : null;
+            } else {
+              final owner = profileData.ownerData!;
+              _firstNameController.text = owner.firstName;
+              _lastNameController.text = owner.lastName;
+              _phoneController.text = owner.phoneNumber ?? '';
+              _addressController.text = owner.residence ?? '';
+              profileImageURL = owner.profilePhoto;
+              selectedGender = owner.gender;
+              selectedReligion =
+                  owner.religion == 'muslim'
+                      ? 'Muslim'
+                      : owner.religion == 'christian'
+                      ? 'Christian'
+                      : null;
+            }
             _isInitialDataSet = true;
           }
 
@@ -142,8 +213,6 @@ class _ProfileTabState extends State<ProfileTab> {
                                 initialImageUrl: profileImageURL,
                               ),
                               SizedBox(height: 30.h),
-
-                              // First Name and Last Name Row
                               Row(
                                 children: [
                                   Expanded(
@@ -181,16 +250,10 @@ class _ProfileTabState extends State<ProfileTab> {
                                   ),
                                 ],
                               ),
-
                               SizedBox(height: 20.h),
-
-                              // Phone Number
                               PhoneInputField(controller: _phoneController),
-
-                              if (!isOwner) ...[
+                              if (!isOwner!) ...[
                                 SizedBox(height: 15.h),
-
-                                // Address
                                 DefaultTextFormField(
                                   hintText: 'Address',
                                   label: 'Address',
@@ -204,10 +267,7 @@ class _ProfileTabState extends State<ProfileTab> {
                                     return null;
                                   },
                                 ),
-
                                 SizedBox(height: 15.h),
-
-                                // College
                                 DefaultTextFormField(
                                   hintText: 'College',
                                   label: 'College',
@@ -221,13 +281,7 @@ class _ProfileTabState extends State<ProfileTab> {
                                     return null;
                                   },
                                 ),
-
                                 SizedBox(height: 15.h),
-                              ],
-                              SizedBox(height: 15.h),
-
-                              // Gender and Religion Row
-                              if (!isOwner)
                                 Row(
                                   children: [
                                     Expanded(
@@ -269,18 +323,16 @@ class _ProfileTabState extends State<ProfileTab> {
                                     ),
                                   ],
                                 ),
-                              if (!isOwner) SizedBox(height: 20.h),
-
-                              // Age Field
-                              if (!isOwner)
+                                SizedBox(height: 20.h),
                                 DefaultTextFormField(
                                   hintText: "Enter your age",
                                   label: "Age",
                                   isPassword: false,
                                   controller: _ageController,
                                 ),
-                              if (isOwner) SizedBox(height: 20.h),
-                              if (isOwner) ...[
+                              ],
+                              if (isOwner!) ...[
+                                SizedBox(height: 20.h),
                                 Align(
                                   alignment: AlignmentDirectional.centerStart,
                                   child: Text(
@@ -456,17 +508,13 @@ class _ProfileTabState extends State<ProfileTab> {
                                   ),
                                 ),
                               ],
-
-                              // Spacer to push submit button to bottom
                               Expanded(child: SizedBox()),
                               SizedBox(height: 20.h),
-
-                              // Submit Button
                               DefaultElevatedButton(
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
                                     UIUtils.showLoading(context);
-                                    await _editStudent();
+                                    await _editProfile();
                                     UIUtils.hideLoading(context);
                                   }
                                 },

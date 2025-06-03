@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:sakany/core/app_bloc_observer.dart';
+import 'package:sakany/features/add_apartment_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/login_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/register_screen.dart';
 import 'package:sakany/features/auth/presentation/screens/landing_page.dart';
@@ -34,9 +35,10 @@ class SakanyApp extends StatelessWidget {
               LoginScreen.routeName: (_) => LoginScreen(),
               //   VerificationScreen.routeName: (_) => VerificationScreen(),
               HomeScreen.routeName: (_) => HomeScreen(),
+              AddApartmentScreen.routeName: (_) => AddApartmentScreen(),
               //  UserProfileFormScreen.routeName: (_) => UserProfileFormScreen(),
             },
-            initialRoute: LoginScreen.routeName,
+            initialRoute: HomeScreen.routeName,
           ),
     );
   }
